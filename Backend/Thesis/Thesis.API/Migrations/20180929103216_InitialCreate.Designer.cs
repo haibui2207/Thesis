@@ -10,7 +10,7 @@ using Thesis.API.Context;
 namespace Thesis.API.Migrations
 {
     [DbContext(typeof(ThesisAPIContext))]
-    [Migration("20180929084802_InitialCreate")]
+    [Migration("20180929103216_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
