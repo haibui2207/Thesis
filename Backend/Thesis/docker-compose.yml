@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  thesis.api:
+    image: ${DOCKER_REGISTRY}thesisapi
+    build:
+      context: .
+      dockerfile: Thesis.API/Dockerfile
