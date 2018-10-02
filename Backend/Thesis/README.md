@@ -1,107 +1,110 @@
 
 
-# TUTORIAL USING SERVER API REQUIRE SQL<br/>
 ----------
-
-----------
-
 # > TEST USING POSTMAN <br/>
+----------
+## # Pin API: http://localhost:xxxxx/api/pin <br/>
+----------
+### # Get all pin<br/>
+>Method: GET <br/>
+>URL: http://localhost:xxxxx/api/pin <br/>
+
+### # Get pin number <br/>
+>Method : GET <br/>
+>URL : http://localhost:xxxxx/api/pin/getpinnumber?pin={PIN-NUMBER}&key={KEY} <br/>
+>Example : http://localhost:xxxxx/api/pin/getpinnumber?pin=4&key=KIT002
+
+### # Update pin number <br/>
+>Method: POST <br/>
+>URL: http://localhost:xxxxx/api/pin <br/>
+>Content: 
+	{
+		"pin": 14,
+		"key": "KIT001",
+		"state: 0 or 1
+	}
+
+### # Reset all pin<br/>
+>Method: POST <br/>
+>URL: http://localhost:xxxxx/api/pin/resetallpin <br/>
 
 ----------
-
+## # User API: http://localhost:xxxxx/api/user <br/>
 ----------
-## # PinController :http://localhost:xxxxx/api/pin <br/>
-----------
->PinModel <br/> 
+### # Get all user <br/>
+>Method: GET <br/>
+>URL: http://localhost:xxxxx/api/user<br/>
 
-    {
-    	int pin; // 1 to 20 
-    	int state;  // 0 or 1 default 0 
-        string key; // KIT001 || KIT002
-    } 
-
-### # GET ALL PIN<br/>
->URL : http://localhost:xxxxx/api/pin <br/>
-Method : GET <br/>
-
-### # RESET ALL PIN<br/>
->URL : http://localhost:xxxxx/api/pin/resetallpin <br/>
-Method : POST <br/>
-
-### #GET A PIN ( example pin = 15 ) <br/>
->URL : http://localhost:xxxxx/api/pin/15 <br/>
-Method : GET <br/>
-
-### #CHANGE STATE OF PIN <br/>
->URL : http://localhost:xxxxx/api/pin <br/>
-Method : POST <br/>
-BODY: <br/>
-
-    {     	
-        "pin": 16, 
-    	"state": 1,
-        "key": "KIT001"
-    } 
-
-----------
-## # UserController :http://localhost:xxxxx/api/user <br/>
-----------
->PinModel <br/>
-
-    { 
-    	int id; 
-    	string name; 
-    	string rfid; 
-    } 
-
-### # GET A User Using RFID Code <br/>
->URL : http://localhost:xxxxx/api/user/{RFID Code} <br/>
-Method : GET <br/>
-
-### #ADD NEW USER <br/>
->URL : http://localhost:xxxxx/api/user <br/>
-Method : POST <br/>
-BODY: <br/>
-
-	{ 
-		"name": "ABC",
-		"rfid": "CODE"
-	} 
+### # User login <br/>
+>Method: POST <br/>
+>URL: http://localhost:xxxxx/api/user/login <br/>
+>Content:
+	{
+		"username": "admin",
+		"password": "admin"
  
-### #REMOVE A USER <br/>
->URL : http://localhost:xxxxx/api/user <br/>
-Method : DELETE <br/>
-BODY: <br/>
+### # Create new user <br/>
+>Method: POST <br/>
+>URL: http://localhost:xxxxx/api/user/create <br/>
+>Content:
+	{
+		"name": "name",
+		"username": "username",
+		"password": "password"
+	}
 
-    { 
-    	"name": "ABC", 
-    	"rfid": "CODE" 
-    } 
+### # Get user info <br/>
+>Method: GET <br/>
+>URL: http://localhost:xxxxx/api/user/info/{userId} <br/>
+>Example:  http://localhost:xxxxx/api/user/info/1
+
+### # Get user by rfid <br/>
+>Method: GET <br/>
+>URL: http://localhost:xxxxx/api/user/rfid/{code} <br/>
+>Example:  http://localhost:xxxxx/api/user/rfid/abcded21
+
+### # Update user info <br/>
+>Method: PUT <br/>
+>URL: http://localhost:xxxxx/api/user <br/>
+>Content:
+	{
+		"id": 1,
+		"username": "username can't change",
+		"name": "new name",
+		"password": "new password",
+		"role": "Admin or User default",
+		"rfid": "c213bcas"
+	}
+
+### # Delete user <br/>
+>Method: DELETE <br/>
+>URL: http://localhost:xxxxx/api/user/{userid} <br/>
+>Example:  http://localhost:xxxxx/api/user/1
+
+### # Delete all user <br/>
+>Method: DELETE <br/>
+>URL: http://localhost:xxxxx/api/user
 
 ----------
 ## # DHTController :http://localhost:xxxxx/api/dht <br/>
 ----------
->PinModel <br/>
+### # Get all data <br/>
+>Method: GET <br/>
+>URL: http://localhost:xxxxx/api/dht
 
-    { 
-        string temperature; 
-        string humidity; 
-    } 
+### # Get lastest record <br/>
+>Method: GET <br/>
+>URL: http://localhost:xxxxx/api/dht/lastestrecord
 
-### # GET DATA <br/>
->URL : http://localhost:xxxxx/api/dht <br/>
-Method : GET <br/>
-
-### #ADD NEW DATA <br/>
->URL : http://localhost:xxxxx/api/dht <br/>
-Method : POST <br/>
-BODY: <br/>
-
-    { 
-        "temperature": 32,
-        "humidity": 40
-    } 
+### # Add new data <br/>
+>Method: POST <br/>
+>URL: http://localhost:xxxxx/api/dht <br/>
+>Content:
+	{
+		"temperature": 32,
+		"humidity": 40
+	}
  
-### #REMOVE A USER <br/>
->URL : http://localhost:xxxxx/api/dht <br/>
-Method : DELETE <br/>
+### # Remove all data <br/>
+>Method: DELETE <br/>
+>URL: http://localhost:xxxxx/api/dht <br/>
