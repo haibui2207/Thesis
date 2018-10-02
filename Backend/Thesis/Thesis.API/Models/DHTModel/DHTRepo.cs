@@ -31,17 +31,34 @@ namespace Thesis.API.Models.DHTModel
             }
         }
 
-        // Triển khai phương thức GetData
-        public IEnumerable<DHT> GetData()
+        // Triển khai phương thức GetAllData
+        public IEnumerable<DHT> GetAllData()
         {
             try
             {
-                int max = _context.DHTs.Max(p => p.id);
-                return _context.DHTs.Where(p => p.id == max);
+                return _context.DHTs.ToArray();
             }
             catch (Exception e)
             {
                 return null;
+                throw e;
+            }
+        }
+
+        // Triển khai phương thức GetLastestRecord
+        public DHT GetLastestRecord()
+        {
+            try
+            {
+                var lastestRecord = from dht in _context.DHTs
+                                    orderby dht.id descending
+                                    select dht;
+                return lastestRecord.ToArray()[0];
+            }
+            catch (Exception e)
+            {
+                return null;
+                throw e;
             }
         }
 
@@ -50,10 +67,9 @@ namespace Thesis.API.Models.DHTModel
         {
             try
             {
-                foreach (var item in _context.DHTs)
-                {
-                    _context.Remove(item);
-                }
+                var data = from dht in _context.DHTs
+                           select dht;
+                _context.DHTs.RemoveRange(data);
                 await _context.SaveChangesAsync();
 
                 return true;
@@ -61,6 +77,7 @@ namespace Thesis.API.Models.DHTModel
             catch (Exception e)
             {
                 return false;
+                throw e;
             }
         }
     }

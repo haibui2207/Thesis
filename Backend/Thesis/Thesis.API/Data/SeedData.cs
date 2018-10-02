@@ -45,7 +45,7 @@ namespace Thesis.API.Data
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(
-                        new User("Hai Bui", "919b8459")
+                        new User("Hai Bui", "admin", "admin", "919b8459", UserRole.Admin)
                     );
 
                 }

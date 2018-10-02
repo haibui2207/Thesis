@@ -25,6 +25,7 @@ namespace Thesis.API.Models.PinModel
             catch (Exception e)
             {
                 return null;
+                throw e;
             }
         }
 
@@ -79,6 +80,7 @@ namespace Thesis.API.Models.PinModel
             catch (Exception e)
             {
                 return false;
+                throw e;
             }
         }
 

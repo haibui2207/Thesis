@@ -1,0 +1,48 @@
+# API Pin
+GET:  api/pin
+GET:  api/pin/getpinnumber?pin=4&key=KIT002
+PUT:  api/pin 
+	{
+		pin: 14,
+		key: "KIT002", 
+		state: 1
+	}
+POST: api/pin/resetallpin
+
+# API User
+GET:  api/user
+POST: api/user/login 
+	{
+		username: "admin", 
+		password: "admin"
+	}
+POST: api/user/create 
+	{
+		name: "tester", 
+		username: "tester", 
+		password: "tester"
+	}
+GET:  api/user/info/{userId}
+GET:  api/user/rfid/{rfidCode}
+PUT:  api/user 
+	{ 
+		id: 2, 
+		username: "username can't change", 
+		name: "changename",
+		password: "newpass",
+		role: "abc",
+		rfid: "abc"
+	}
+DELETE: api/user/2
+DELETE: api/user - remove all user
+
+# API DHT
+GET:  api/dht
+GET:  api/dht/lastestrecord
+POST: api/dht 
+	{ 
+		temperature: 32, 
+		humidity: 60, 
+		key: "KIT001"
+	}
+DELETE: api/dht

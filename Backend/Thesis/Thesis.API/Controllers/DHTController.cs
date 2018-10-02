@@ -21,7 +21,17 @@ namespace Thesis.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var data = _repository.GetData();
+            var data = _repository.GetAllData();
+
+            return Ok(data);
+        }
+
+        // method GET: api/dht/lastestrecord
+        [HttpGet]
+        [Route("lastestrecord")]
+        public IActionResult GetLastestRecord()
+        {
+            var data = _repository.GetLastestRecord();
 
             return Ok(data);
         }
@@ -49,6 +59,7 @@ namespace Thesis.API.Controllers
             catch (Exception e)
             {
                 return BadRequest();
+                throw e;
             }
         }
 
@@ -66,6 +77,7 @@ namespace Thesis.API.Controllers
             catch (Exception e)
             {
                 return BadRequest();
+                throw e;
             }
         }
     }

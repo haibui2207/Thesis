@@ -45,12 +45,13 @@ namespace Thesis.API.Controllers
             catch (Exception e)
             {
                 return NotFound();
+                throw e;
             }
         }
 
-        // method POST: api/pin
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Pin dt)
+        // method PUT: api/pin
+        [HttpPut]
+        public async Task<IActionResult> UpdatePinNumber([FromBody] Pin dt)
         {
             try
             {
@@ -71,6 +72,7 @@ namespace Thesis.API.Controllers
             catch (Exception e)
             {
                 return BadRequest();
+                throw e;
             }
         }
 
@@ -89,6 +91,7 @@ namespace Thesis.API.Controllers
             catch (Exception e)
             {
                 return BadRequest();
+                throw e;
             }
         }
     }

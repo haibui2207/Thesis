@@ -7,8 +7,13 @@ namespace Thesis.API.Models.UserModel
 {
     interface IUserRepo
     {
-        Task<User> Add(User dt);    // Thêm một User
-        User Remove(User dt);   // Xóa một User
-        User GetDataByRFID(string RFID);    // Lấy thông tin User dựa vào mã RFID
+        User Login(User user);    // Đăng nhập
+        Task<User> Add(User user);    // Thêm một User
+        IEnumerable<User> GetAllUser();  // Lấy tất cả user
+        User GetUserInfo(int userId);    // Lấy thông tin User 
+        User GetUserByRFID(string rfidCode);    // Lấy thông tin User dựa vào mã RFID
+        Task<User> UpdateUser(User user);    // Thay đổi thông tin User
+        Task<bool> RemoveUser(int userId);   // Xóa một User
+        Task<bool> RemoveAllUser();   // Xóa tất cả User
     }
 }

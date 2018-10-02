@@ -60,11 +60,18 @@ namespace Thesis.API.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("RFID")
-                        .IsRequired()
                         .HasMaxLength(8);
 
                     b.Property<string>("name")
-                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("password")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("role")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("username")
                         .HasMaxLength(20);
 
                     b.HasKey("id");
