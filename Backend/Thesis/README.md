@@ -18,10 +18,11 @@
 >Method: POST <br/>
 >URL: http://localhost:xxxxx/api/pin <br/>
 >Content: 
+
 	{
 		"pin": 14,
 		"key": "KIT001",
-		"state: 0 or 1
+		"state": 0 or 1
 	}
 
 ### # Reset all pin<br/>
@@ -39,14 +40,17 @@
 >Method: POST <br/>
 >URL: http://localhost:xxxxx/api/user/login <br/>
 >Content:
+
 	{
 		"username": "admin",
 		"password": "admin"
+	}
  
 ### # Create new user <br/>
 >Method: POST <br/>
 >URL: http://localhost:xxxxx/api/user/create <br/>
 >Content:
+
 	{
 		"name": "name",
 		"username": "username",
@@ -66,7 +70,8 @@
 ### # Update user info <br/>
 >Method: PUT <br/>
 >URL: http://localhost:xxxxx/api/user <br/>
->Content:
+>Content: <br/>    
+
 	{
 		"id": 1,
 		"username": "username can't change",
@@ -100,6 +105,7 @@
 >Method: POST <br/>
 >URL: http://localhost:xxxxx/api/dht <br/>
 >Content:
+
 	{
 		"temperature": 32,
 		"humidity": 40
