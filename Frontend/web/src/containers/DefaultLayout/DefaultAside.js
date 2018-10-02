@@ -66,7 +66,7 @@ class DefaultAside extends Component {
           <TabPane tabId="1">
             <ListGroup className="list-group-accent">
               <ListGroupItem className="list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Today</ListGroupItem>
-              <ListGroupItem action tag="a" href="#" className="list-group-item-accent-warning list-group-item-divider">
+              <ListGroupItem action tag="a"  className="list-group-item-accent-warning list-group-item-divider">
                 <div className="avatar float-right">
                   <img className="img-avatar" src="assets/img/avatars/7.jpg" alt="admin@bootstrapmaster.com"></img>
                 </div>
@@ -78,7 +78,7 @@ class DefaultAside extends Component {
                   <i className="icon-location-pin"></i> Palo Alto, CA
                 </small>
               </ListGroupItem>
-              <ListGroupItem action tag="a" href="#" className="list-group-item-accent-info list-group-item-divider">
+              <ListGroupItem action tag="a"  className="list-group-item-accent-info list-group-item-divider">
                 <div className="avatar float-right">
                   <img className="img-avatar" src="assets/img/avatars/4.jpg" alt="admin@bootstrapmaster.com"></img>
                 </div>
@@ -91,7 +91,7 @@ class DefaultAside extends Component {
                 </small>
               </ListGroupItem>
               <ListGroupItem className="list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Tomorrow</ListGroupItem>
-              <ListGroupItem action tag="a" href="#" className="list-group-item-accent-danger list-group-item-divider">
+              <ListGroupItem action tag="a"  className="list-group-item-accent-danger list-group-item-divider">
                 <div>New UI Project - <strong>deadline</strong></div>
                 <small className="text-muted mr-3"><i className="icon-calendar"></i>&nbsp; 10 - 11pm</small>
                 <small className="text-muted"><i className="icon-home"></i>&nbsp; creativeLabs HQ</small>
@@ -113,12 +113,12 @@ class DefaultAside extends Component {
                   </div>
                 </div>
               </ListGroupItem>
-              <ListGroupItem action tag="a" href="#" className="list-group-item-accent-success list-group-item-divider">
+              <ListGroupItem action tag="a"  className="list-group-item-accent-success list-group-item-divider">
                 <div><strong>#10 Startups.Garden</strong> Meetup</div>
                 <small className="text-muted mr-3"><i className="icon-calendar"></i>&nbsp; 1 - 3pm</small>
                 <small className="text-muted"><i className="icon-location-pin"></i>&nbsp; Palo Alto, CA</small>
               </ListGroupItem>
-              <ListGroupItem action tag="a" href="#" className="list-group-item-accent-primary list-group-item-divider">
+              <ListGroupItem action tag="a"  className="list-group-item-accent-primary list-group-item-divider">
                 <div><strong>Team meeting</strong></div>
                 <small className="text-muted mr-3"><i className="icon-calendar"></i>&nbsp; 4 - 6pm</small>
                 <small className="text-muted"><i className="icon-home"></i>&nbsp; creativeLabs HQ</small>

@@ -21,18 +21,18 @@ class Breadcrumbs extends Component {
                   <BreadcrumbItem active>Home</BreadcrumbItem>
                 </Breadcrumb>
                 <Breadcrumb>
-                  <BreadcrumbItem><a href="#">Home</a></BreadcrumbItem>
+                  <BreadcrumbItem><a >Home</a></BreadcrumbItem>
                   <BreadcrumbItem active>Library</BreadcrumbItem>
                 </Breadcrumb>
                 <Breadcrumb>
-                  <BreadcrumbItem><a href="#">Home</a></BreadcrumbItem>
-                  <BreadcrumbItem><a href="#">Library</a></BreadcrumbItem>
+                  <BreadcrumbItem><a >Home</a></BreadcrumbItem>
+                  <BreadcrumbItem><a >Library</a></BreadcrumbItem>
                   <BreadcrumbItem active>Data</BreadcrumbItem>
                 </Breadcrumb>
                 <Breadcrumb tag="nav">
-                  <BreadcrumbItem tag="a" href="#">Home</BreadcrumbItem>
-                  <BreadcrumbItem tag="a" href="#">Library</BreadcrumbItem>
-                  <BreadcrumbItem tag="a" href="#">Data</BreadcrumbItem>
+                  <BreadcrumbItem tag="a" >Home</BreadcrumbItem>
+                  <BreadcrumbItem tag="a" >Library</BreadcrumbItem>
+                  <BreadcrumbItem tag="a" >Data</BreadcrumbItem>
                   <BreadcrumbItem active tag="span">Bootstrap</BreadcrumbItem>
                 </Breadcrumb>
               </CardBody>

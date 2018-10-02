@@ -1,0 +1,9 @@
+export const host = "http://localhost";
+export const port = 53959;
+export const pinAPI = "/api/pin";
+export const userAPI = "/api/user";
+export const DHTAPI = "/api/dht";
+export const kitKey001 = "KIT001";
+export const kitKey002 = "KIT002";
+export const roleAdmin = "Admin";
+export const roleUser = "User";

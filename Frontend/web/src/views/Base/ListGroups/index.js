@@ -71,11 +71,11 @@ class ListGroups extends Component {
               </CardHeader>
               <CardBody>
                 <ListGroup>
-                  <ListGroupItem disabled tag="a" href="#">Cras justo odio</ListGroupItem>
-                  <ListGroupItem tag="a" href="#">Dapibus ac facilisis in</ListGroupItem>
-                  <ListGroupItem disabled tag="a" href="#">Morbi leo risus</ListGroupItem>
-                  <ListGroupItem tag="a" href="#">Porta ac consectetur ac</ListGroupItem>
-                  <ListGroupItem tag="a" href="#">Vestibulum at eros</ListGroupItem>
+                  <ListGroupItem disabled tag="a" >Cras justo odio</ListGroupItem>
+                  <ListGroupItem tag="a" >Dapibus ac facilisis in</ListGroupItem>
+                  <ListGroupItem disabled tag="a" >Morbi leo risus</ListGroupItem>
+                  <ListGroupItem tag="a" >Porta ac consectetur ac</ListGroupItem>
+                  <ListGroupItem tag="a" >Vestibulum at eros</ListGroupItem>
                 </ListGroup>
               </CardBody>
             </Card>
@@ -107,11 +107,11 @@ class ListGroups extends Component {
               <CardBody>
                 <p>Be sure to <strong>not use the standard <code>.btn</code> classes here</strong>.</p>
                 <ListGroup>
-                  <ListGroupItem active tag="a" href="#" action>Cras justo odio</ListGroupItem>
-                  <ListGroupItem tag="a" href="#" action>Dapibus ac facilisis in</ListGroupItem>
-                  <ListGroupItem tag="a" href="#" action>Morbi leo risus</ListGroupItem>
-                  <ListGroupItem tag="a" href="#" action>Porta ac consectetur ac</ListGroupItem>
-                  <ListGroupItem disabled tag="a" href="#" action>Vestibulum at eros</ListGroupItem>
+                  <ListGroupItem active tag="a"  action>Cras justo odio</ListGroupItem>
+                  <ListGroupItem tag="a"  action>Dapibus ac facilisis in</ListGroupItem>
+                  <ListGroupItem tag="a"  action>Morbi leo risus</ListGroupItem>
+                  <ListGroupItem tag="a"  action>Porta ac consectetur ac</ListGroupItem>
+                  <ListGroupItem disabled tag="a"  action>Vestibulum at eros</ListGroupItem>
                 </ListGroup>
                 <p />
               </CardBody>
