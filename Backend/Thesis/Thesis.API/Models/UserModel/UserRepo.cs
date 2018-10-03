@@ -33,7 +33,7 @@ namespace Thesis.API.Models.UserModel
         {
             try
             {
-                if (newUser.role == null)
+                if (String.IsNullOrEmpty(newUser.role))
                 {
                     newUser.role = UserRole.User;
                 }

@@ -19,6 +19,8 @@ namespace Thesis.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Thiết lập Cors
+            services.AddCors();
             services.AddMvc();
             // Thiết lập kết nối đến SQLite
             services.AddDbContext<ThesisAPIContext>(options =>
@@ -39,6 +41,13 @@ namespace Thesis.API
             }
 
             app.UseStaticFiles();
+
+            // Thiết lập Cors
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseMvc(routes =>
             {
