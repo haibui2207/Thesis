@@ -3,6 +3,22 @@ import axios from 'axios';
 
 var host = `${config.host}:${config.port}`;
 
+// import * as api from '../../../httpRequest';
+// api.getAllPin();
+// api.getPinNumber(14, 'KIT001');
+// api.updatePinNumber(14, 'KIT001', 1);
+// api.resetAllPin();
+// api.getAllUsers();
+// api.login('admin', 'admin');
+// api.createNewUser('tester', 'tester', 'tester');
+// api.getUserInfo(1);
+// api.getUserByRfid();
+// api.deleteUser(2);
+// api.deleteAllUsers();
+// api.getAllDHTData();
+// api.getLastestRecordDHT();
+// api.deleteAllDHTData();
+
 /*********************************API Pin*************************************/
 export async function getAllPin() {
 	await axios
@@ -66,6 +82,7 @@ export async function getAllUsers() {
 }
 
 export async function login(username, password) {
+	var result;
 	var data = {
 		username: username,
 		password: password
@@ -73,11 +90,19 @@ export async function login(username, password) {
 	await axios
 		.post(`${host}${config.userAPI}/login`, data)
 		.then(res => {
-			console.log(JSON.stringify(res.data));
+			result = {
+				status: res.status,
+				data: res.data
+			};
 		})
 		.catch(err => {
-			console.log(JSON.stringify(err));
+			result = {
+				status: err.response.status,
+				data: {}
+			};
 		});
+
+	return result;
 }
 
 export async function createNewUser(name, username, password, rfidCode = '', role = '') {
@@ -121,57 +146,57 @@ export async function getUserByRfid(rfidCode) {
 }
 
 export async function deleteUser(userId) {
-  await axios
-    .delete(`${host}${config.userAPI}/${userId}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+	await axios
+		.delete(`${host}${config.userAPI}/${userId}`)
+		.then(res => {
+			console.log(JSON.stringify(res.data));
+		})
+		.catch(err => {
+			console.log(JSON.stringify(err));
+		});
 }
 
 export async function deleteAllUsers() {
-  await axios
-    .delete(`${host}${config.userAPI}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+	await axios
+		.delete(`${host}${config.userAPI}`)
+		.then(res => {
+			console.log(JSON.stringify(res.data));
+		})
+		.catch(err => {
+			console.log(JSON.stringify(err));
+		});
 }
 
 /*********************************API DHT*************************************/
 export async function getAllDHTData() {
-  await axios
-    .get(`${host}${config.DHTAPI}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+	await axios
+		.get(`${host}${config.DHTAPI}`)
+		.then(res => {
+			console.log(JSON.stringify(res.data));
+		})
+		.catch(err => {
+			console.log(JSON.stringify(err));
+		});
 }
 
 export async function getLastestRecordDHT() {
-  await axios
-    .get(`${host}${config.DHTAPI}/lastestrecord`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+	await axios
+		.get(`${host}${config.DHTAPI}/lastestrecord`)
+		.then(res => {
+			console.log(JSON.stringify(res.data));
+		})
+		.catch(err => {
+			console.log(JSON.stringify(err));
+		});
 }
 
 export async function deleteAllDHTData() {
-  await axios
-    .delete(`${host}${config.DHTAPI}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+	await axios
+		.delete(`${host}${config.DHTAPI}`)
+		.then(res => {
+			console.log(JSON.stringify(res.data));
+		})
+		.catch(err => {
+			console.log(JSON.stringify(err));
+		});
 }

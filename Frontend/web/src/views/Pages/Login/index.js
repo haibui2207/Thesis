@@ -11,27 +11,45 @@ import {
 	InputGroup,
 	InputGroupAddon,
 	InputGroupText,
-	Row
+	Row,
+	Alert
 } from 'reactstrap';
 import * as api from '../../../httpRequest';
 
 class Login extends Component {
-	onClickLogin = async () => {
-		// api.getAllPin();
-		// api.getPinNumber(14, 'KIT001');
-		// api.updatePinNumber(14, 'KIT001', 1);
-		// api.resetAllPin();
-		// api.getAllUsers();
-		// api.login('admin', 'admin');
-		// api.createNewUser('tester', 'tester', 'tester');
-		// api.getUserInfo(1);
-		// api.getUserByRfid();
-		// api.deleteUser(2);
-    // api.deleteAllUsers();
-    // api.getAllDHTData();
-    // api.getLastestRecordDHT();
-    api.deleteAllDHTData();
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			username: '',
+			password: '',
+			showError: false
+		};
+	}
+
+	handleInputChange = event => {
+		this.setState({
+			[event.target.name]: event.target.value
+		});
 	};
+
+	onClickLogin = async event => {
+		event.preventDefault();
+		var response = await api.login(this.state.username, this.state.password);
+		if (response.status === 200) {
+			this.props.history.push('/dashboard');
+		} else {
+			this.setState({ showError: true });
+		}
+	};
+
+	onKeyDown = async event => {
+		this.setState({ showError: false });
+		if (event.keyCode === 13) {
+			this.onClickLogin(event);
+		}
+	};
+
 	render() {
 		return (
 			<div className="app flex-row align-items-center">
@@ -50,7 +68,14 @@ class Login extends Component {
 														<i className="icon-user" />
 													</InputGroupText>
 												</InputGroupAddon>
-												<Input type="text" placeholder="Username" autoComplete="username" />
+												<Input
+													type="text"
+													name="username"
+													placeholder="Username"
+													autoComplete="username"
+													onChange={this.handleInputChange}
+													onKeyDown={this.onKeyDown}
+												/>
 											</InputGroup>
 											<InputGroup className="mb-4">
 												<InputGroupAddon addonType="prepend">
@@ -60,10 +85,19 @@ class Login extends Component {
 												</InputGroupAddon>
 												<Input
 													type="password"
+													name="password"
 													placeholder="Password"
 													autoComplete="current-password"
+													onChange={this.handleInputChange}
+													onKeyDown={this.onKeyDown}
 												/>
 											</InputGroup>
+											<Alert
+												color="danger"
+												style={{"display": this.state.showError ? 'block' : 'none'}}
+											>
+												Login Failed!
+											</Alert>
 											<Row>
 												<Col xs="6">
 													<Button
@@ -87,11 +121,13 @@ class Login extends Component {
 									<CardBody className="text-center">
 										<div>
 											<h2>Sign up</h2>
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-												tempor incididunt ut labore et dolore magna aliqua.
-											</p>
-											<Button color="primary" className="mt-3" active>
+											<p>Create New Account</p>
+											<Button
+												color="primary"
+												className="mt-3"
+												active
+												onClick={() => this.props.history.push('/register')}
+											>
 												Register Now!
 											</Button>
 										</div>

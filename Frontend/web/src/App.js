@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Styles
 // CoreUI Icons Set
 import '@coreui/icons/css/coreui-icons.min.css';
@@ -27,11 +27,12 @@ class App extends Component {
 		return (
 			<HashRouter>
 				<Switch>
-					<Route exact path="/login" name="Login Page" component={Login} />
-					<Route exact path="/register" name="Register Page" component={Register} />
-					<Route exact path="/404" name="Page 404" component={Page404} />
-					<Route exact path="/500" name="Page 500" component={Page500} />
-					<Route path="/" name="Home" component={DefaultLayout} />
+					<Route path="/login" name="Login Page" component={Login} />
+					<Route path="/register" name="Register Page" component={Register} />
+					<Route path="/404" name="Page 404" component={Page404} />
+					<Route path="/500" name="Page 500" component={Page500} />
+					<Route path="/dashboard" name="Home" component={DefaultLayout} />
+					<Redirect from="/" to="/login" />
 				</Switch>
 			</HashRouter>
 		);
