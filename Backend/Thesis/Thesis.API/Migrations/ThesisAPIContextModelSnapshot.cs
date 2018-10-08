@@ -62,6 +62,12 @@ namespace Thesis.API.Migrations
                     b.Property<string>("RFID")
                         .HasMaxLength(8);
 
+                    b.Property<string>("email")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("gender")
+                        .HasMaxLength(10);
+
                     b.Property<string>("name")
                         .HasMaxLength(20);
 

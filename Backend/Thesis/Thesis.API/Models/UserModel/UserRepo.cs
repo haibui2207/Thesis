@@ -37,6 +37,10 @@ namespace Thesis.API.Models.UserModel
                 {
                     newUser.role = UserRole.User;
                 }
+                if (String.IsNullOrEmpty(newUser.gender))
+                {
+                    newUser.gender = Gender.Male;
+                }
                 await _context.Users.AddAsync(newUser);
                 await _context.SaveChangesAsync();
                 return newUser;
