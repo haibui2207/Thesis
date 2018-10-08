@@ -20,7 +20,6 @@ import {
   Row,
   Table,
 } from 'reactstrap';
-import Widget03 from '../Widgets/Widget03'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 
@@ -637,11 +636,6 @@ class Dashboard extends Component {
 
         <Row>
           <Col xs="6" sm="6" lg="3">
-            <Widget03 dataBox={() => ({ variant: 'facebook', friends: '89k', feeds: '459' })} >
-              <div className="chart-wrapper">
-                <Line data={makeSocialBoxData(0)} options={socialChartOpts} height={90} />
-              </div>
-            </Widget03>
           </Col>
 
           <Col xs="6" sm="6" lg="3">

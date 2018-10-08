@@ -1,42 +1,62 @@
-import React, { Component } from 'react';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-// Styles
-// CoreUI Icons Set
-import '@coreui/icons/css/coreui-icons.min.css';
-// Import Flag Icons Set
-import 'flag-icon-css/css/flag-icon.min.css';
-// Import Font Awesome Icons Set
-import 'font-awesome/css/font-awesome.min.css';
-// Import Simple Line Icons Set
-import 'simple-line-icons/css/simple-line-icons.css';
-// Import Main styles for this application
-import './scss/style.css';
+import React, { Component } from "react";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-// Containers
-import { DefaultLayout } from './containers';
-// Pages
-import Login from './views/Pages/Login';
-import Register from './views/Pages/Register';
-import Page404 from './views/Pages/Page404';
-import Page500 from './views/Pages/Page500';
+import "@coreui/icons/css/coreui-icons.min.css";
+import "flag-icon-css/css/flag-icon.min.css";
+import "font-awesome/css/font-awesome.min.css";
+import "simple-line-icons/css/simple-line-icons.css";
+import "./scss/style.css";
 
-// import { renderRoutes } from 'react-router-config';
+import { DefaultLayout } from "./containers";
+import Login from "./views/Pages/Login";
+import Register from "./views/Pages/Register";
+import Page404 from "./views/Pages/Page404";
+import Page500 from "./views/Pages/Page500";
 
 class App extends Component {
-	render() {
-		return (
-			<HashRouter>
-				<Switch>
-					<Route path="/login" name="Login Page" component={Login} />
-					<Route path="/register" name="Register Page" component={Register} />
-					<Route path="/404" name="Page 404" component={Page404} />
-					<Route path="/500" name="Page 500" component={Page500} />
-					<Route path="/dashboard" name="Home" component={DefaultLayout} />
-					<Redirect from="/" to="/login" />
-				</Switch>
-			</HashRouter>
-		);
-	}
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoggedIn: false
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({ isLoggedIn: newProps.isLoggedIn });
+  }
+
+  render() {
+    return (
+      <HashRouter>
+        <Switch>
+          <Route path="/login" name="Login Page" component={Login} />
+          {!this.state.isLoggedIn && (
+            <Route path="/register" name="Register Page" component={Register} />
+          )}
+          {!this.state.isLoggedIn && <Redirect to="login" />}
+
+          {this.state.isLoggedIn && (
+            <Route path="/404" name="Page 404" component={Page404} />
+          )}
+          {this.state.isLoggedIn && (
+            <Route path="/500" name="Page 500" component={Page500} />
+          )}
+          {this.state.isLoggedIn && (
+            <Route path="/" name="Home" component={DefaultLayout} />
+          )}
+          {this.state.isLoggedIn && <Redirect to="/" />}
+        </Switch>
+      </HashRouter>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.login.isLoggedIn
+  };
+};
+
+export default connect(mapStateToProps)(App);
