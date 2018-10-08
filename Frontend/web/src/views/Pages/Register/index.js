@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert } from 'reactstrap';
-import { createNewUser } from '../../../httpRequest';
 import { MALE, FEMALE } from "../../../constants"
+import { createNewUser, login } from "../../../httpRequest";
+import { SUCCESSFUL } from "../../../constants"
 
 class Register extends Component {
   constructor(props) {
@@ -19,6 +22,24 @@ class Register extends Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    console.log(newProps);
+    if (newProps.createUserResponse.status === SUCCESSFUL) {
+      if (newProps.loginResponse.status === SUCCESSFUL && newProps.loginResponse.isLoggedIn) {
+        this.setState({
+          showError: false,
+          message: ""
+        });
+        this.props.history.push("/dashboard");
+        return;
+      }
+      this.props.login({
+        username: this.state.username,
+        password: this.state.password
+      })
+    }
+  }
+
   handleInputChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -31,7 +52,7 @@ class Register extends Component {
     });
   }
 
-  onSubmit = async event => {
+  onSubmit = event => {
     event.preventDefault();
     if (!this.state.name || !this.state.username || !this.state.password || !this.state.confirmPassword) {
       this.setState({
@@ -48,18 +69,13 @@ class Register extends Component {
       return;
     }
 
-    const response = await createNewUser({
+    this.props.createNewUser({
       name: this.state.name,
       username: this.state.username,
       password: this.state.password,
       gender: this.state.gender,
-
+      email: this.state.email
     });
-    if (response.status && response.status === 200) {
-      this.props.history.push('/dashboard');
-    } else {
-      this.setState({ showError: true });
-    }
   }
 
   onKeyDown = async event => {
@@ -68,11 +84,6 @@ class Register extends Component {
       this.onSubmit(event);
     }
   };
-
-
-  goLoginPage = () => {
-    this.props.history.push('/login');
-  }
 
   render() {
     return (
@@ -148,7 +159,7 @@ class Register extends Component {
                 <CardFooter className="p-4">
                   <Row>
                     <Col xs="12">
-                      <Button className="btn-twitter" onClick={this.goLoginPage} block><span>Already have account</span></Button>
+                      <Button className="btn-twitter" onClick={() => this.props.history.push('/login')} block><span>Already have account</span></Button>
                     </Col>
                   </Row>
                 </CardFooter>
@@ -156,9 +167,28 @@ class Register extends Component {
             </Col>
           </Row>
         </Container>
-      </div>
+      </div >
     );
   }
 }
 
-export default Register;
+const mapStateToProps = state => {
+  return {
+    createUserResponse: state.createNewUser,
+    loginResponse: state.login
+  };
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      createNewUser,
+      login
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Register);

@@ -100,39 +100,36 @@ export function login({ username, password }) {
   };
 }
 
-export function createNewUser(
+export function createNewUser({
   name,
   username,
   password,
+  gender,
+  email = "",
   rfidCode = "",
   role = ""
-) {
-  let result;
+}) {
   const data = {
     name: name,
     username: username,
+    email: email,
     password: password,
     rfid: rfidCode,
-    role: role ? config.roleUser : role
+    role: role ? config.roleUser : role,
+    gender: gender
   };
-  axios
-    .post(`${host}${config.userAPI}/create`, data)
-    .then(res => {
-      result = {
-        status: res.status,
-        data: res.data
-      };
-    })
-    .catch(err => {
-      if (err.response) {
-        result = {
-          status: err.response.status,
-          data: {}
-        };
-      }
-    });
-
-  return result;
+  return dispatch => {
+    return axios
+      .post(`${host}${config.userAPI}/create`, data)
+      .then(res => {
+        dispatch(apiActions.userAPIActions.createNewUserSuccessful(res.data));
+      })
+      .catch(err => {
+        if (err.response) {
+          dispatch(apiActions.userAPIActions.createNewUserFailed());
+        }
+      });
+  }
 }
 
 export function getUserInfo(userId) {
@@ -156,6 +153,35 @@ export function getUserByRfid(rfidCode) {
       console.log(JSON.stringify(err));
     });
 }
+
+export function updateUserInfo({
+  name,
+  username,
+  password,
+  gender,
+  email,
+  rfidCode
+}) {
+  const data = {
+    name: name,
+    username: username,
+    email: email,
+    password: password,
+    rfid: rfidCode,
+    gender: gender
+  };
+  return dispatch => {
+    return axios
+      .post(`${host}${config.userAPI}/rfid/${rfidCode}`, data)
+      .then(res => {
+        dispatch(apiActions.userAPIActions.updateUserInfoSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.userAPIActions.updateUserInfoFailed());
+      });
+  }
+}
+
 
 export function deleteUser(userId) {
   axios

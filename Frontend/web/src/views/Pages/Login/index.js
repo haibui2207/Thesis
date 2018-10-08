@@ -17,6 +17,7 @@ import {
   Alert
 } from "reactstrap";
 import { login } from "../../../httpRequest";
+import { SUCCESSFUL } from "../../../constants"
 
 class Login extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.loginResponse.isLoggedIn) {
+    if (newProps.loginResponse.status === SUCCESSFUL && newProps.loginResponse.isLoggedIn) {
       this.setState({
         showError: false,
         message: ""
@@ -191,4 +192,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Login);
-
