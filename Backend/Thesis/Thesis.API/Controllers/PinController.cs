@@ -49,8 +49,8 @@ namespace Thesis.API.Controllers
             }
         }
 
-        // method PUT: api/pin
-        [HttpPut]
+        // method POST: api/pin
+        [HttpPost]
         public async Task<IActionResult> UpdatePinNumber([FromBody] Pin dt)
         {
             try
