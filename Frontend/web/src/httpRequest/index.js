@@ -4,7 +4,6 @@ import apiActions from "../redux/actions";
 
 let host = `${config.host}:${config.port}`;
 
-// import * as api from '../../../httpRequest';
 // api.getAllPin();
 // api.getPinNumber(14, 'KIT001');
 // api.updatePinNumber(14, 'KIT001', 1);
@@ -72,14 +71,16 @@ export function resetAllPin() {
 
 /*********************************API User*************************************/
 export function getAllUsers() {
-  axios
-    .get(`${host}${config.userAPI}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .get(`${host}${config.userAPI}`)
+      .then(res => {
+        dispatch(apiActions.userAPIActions.getAllUsersSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.userAPIActions.getAllUsersFailed());
+      });
+  };
 }
 
 export function login({ username, password }) {

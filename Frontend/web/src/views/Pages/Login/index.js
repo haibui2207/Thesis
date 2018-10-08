@@ -16,7 +16,6 @@ import {
   Row,
   Alert
 } from "reactstrap";
-
 import { login } from "../../../httpRequest";
 
 class Login extends Component {

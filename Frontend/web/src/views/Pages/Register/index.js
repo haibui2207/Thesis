@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert } from 'reactstrap';
+import { Button, Card, CardBody, CardFooter, Col, Container, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert } from 'reactstrap';
 import { createNewUser } from '../../../httpRequest';
+import { MALE, FEMALE } from "../../../constants"
 
 class Register extends Component {
   constructor(props) {
@@ -11,6 +12,8 @@ class Register extends Component {
       username: '',
       password: '',
       confirmPassword: '',
+      gender: MALE,
+      email: "",
       showError: false,
       message: ''
     };
@@ -21,6 +24,12 @@ class Register extends Component {
       [event.target.name]: event.target.value
     });
   };
+
+  handleGender = event => {
+    this.setState({
+      gender: event.currentTarget.value
+    });
+  }
 
   onSubmit = async event => {
     event.preventDefault();
@@ -39,7 +48,13 @@ class Register extends Component {
       return;
     }
 
-    const response = await createNewUser(this.state.name, this.state.username, this.state.password);
+    const response = await createNewUser({
+      name: this.state.name,
+      username: this.state.username,
+      password: this.state.password,
+      gender: this.state.gender,
+
+    });
     if (response.status && response.status === 200) {
       this.props.history.push('/dashboard');
     } else {
@@ -88,6 +103,12 @@ class Register extends Component {
                     </InputGroup>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
+                        <InputGroupText>@</InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="email" name="email" onChange={this.handleInputChange} onKeyDown={this.onKeyDown} placeholder="email@gmail.com" autoComplete="email" />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="icon-lock"></i>
                         </InputGroupText>
@@ -102,6 +123,19 @@ class Register extends Component {
                       </InputGroupAddon>
                       <Input type="password" name="confirmPassword" onChange={this.handleInputChange} onKeyDown={this.onKeyDown} placeholder="Repeat password" autoComplete="new-password" />
                     </InputGroup>
+                    <FormGroup tag="fieldset">
+                      <FormGroup check>
+                        <Label check>
+                          <Input type="radio" checked name="gender" value={MALE} onChange={this.handleGender} />
+                          {MALE}
+                        </Label>
+                      </FormGroup>
+                      <FormGroup check>
+                        <Label check>
+                          <Input type="radio" name="gender" value={FEMALE} onChange={this.handleGender} />
+                          {FEMALE} </Label>
+                      </FormGroup>
+                    </FormGroup>
                     <Alert
                       color="danger"
                       style={{ "display": this.state.showError ? 'block' : 'none' }}
