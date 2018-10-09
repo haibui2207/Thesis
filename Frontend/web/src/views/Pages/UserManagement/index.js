@@ -64,7 +64,7 @@ class UserManagement extends Component {
             <i class="icons font-2xl d-block cui-brush"></i>
           </a>
         </td>
-      </tr>)
+      </tr>);
 
     return <div className="animated fadeIn">
       <Row>

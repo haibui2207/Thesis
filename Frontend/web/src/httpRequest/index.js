@@ -4,7 +4,7 @@ import apiActions from "../redux/actions";
 
 let host = `${config.host}:${config.port}`;
 
-// api.getAllPin();
+// api.getAllPins();
 // api.getPinNumber(14, 'KIT001');
 // api.updatePinNumber(14, 'KIT001', 1);
 // api.resetAllPin();
@@ -20,53 +20,62 @@ let host = `${config.host}:${config.port}`;
 // api.deleteAllDHTData();
 
 /*********************************API Pin*************************************/
-export function getAllPin() {
-  axios
-    .get(`${host}${config.pinAPI}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+export function getAllPins() {
+  return dispatch => {
+    return axios
+      .get(`${host}${config.pinAPI}`)
+      .then(res => {
+        dispatch(apiActions.pinAPIActions.getAllPinsSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.pinAPIActions.getAllPinsFailed());
+      });
+  }
 }
 
 export function getPinNumber(pin, kitKey) {
-  axios
-    .get(`${host}${config.pinAPI}/getpinnumber?pin=${pin}&key=${kitKey}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .get(`${host}${config.pinAPI}/getpinnumber?pin=${pin}&key=${kitKey}`)
+      .then(res => {
+        dispatch(apiActions.pinAPIActions.getPinNumberSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.pinAPIActions.getPinNumberFailed());
+      });
+  }
 }
 
-export function updatePinNumber(pin, kitKey, pinState) {
+export function updatePinNumber({ pin, key, state }) {
   const data = {
     pin: pin,
-    key: kitKey,
-    state: pinState
+    key: key,
+    state: state
   };
-  axios
-    .put(`${host}${config.pinAPI}`, data)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  console.log(data);
+  return dispatch => {
+    return axios
+      .post(`${host}${config.pinAPI}`, data)
+      .then(res => {
+        dispatch(apiActions.pinAPIActions.updatePinNumberSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.pinAPIActions.updatePinNumberFailed());
+      });
+  }
 }
 
 export function resetAllPin() {
-  axios
-    .post(`${host}${config.pinAPI}/resetallpin`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .post(`${host}${config.pinAPI}/resetallpin`)
+      .then(res => {
+        dispatch(apiActions.pinAPIActions.resetAllPinSuccessful(res));
+      })
+      .catch(err => {
+        dispatch(apiActions.pinAPIActions.resetAllPinFailed());
+      });
+  }
 }
 
 /*********************************API User*************************************/
@@ -133,25 +142,29 @@ export function createNewUser({
 }
 
 export function getUserInfo(userId) {
-  axios
-    .get(`${host}${config.userAPI}/info/${userId}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .get(`${host}${config.userAPI}/info/${userId}`)
+      .then(res => {
+        dispatch(apiActions.userAPIActions.getUserInfoSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.userAPIActions.getUserInfoFailed());
+      });
+  }
 }
 
 export function getUserByRfid(rfidCode) {
-  axios
-    .get(`${host}${config.userAPI}/rfid/${rfidCode}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .get(`${host}${config.userAPI}/rfid/${rfidCode}`)
+      .then(res => {
+        dispatch(apiActions.userAPIActions.getUserByRfidSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.userAPIActions.getUserByRfidFailed());
+      });
+  }
 }
 
 export function updateUserInfo({
@@ -184,57 +197,67 @@ export function updateUserInfo({
 
 
 export function deleteUser(userId) {
-  axios
-    .delete(`${host}${config.userAPI}/${userId}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .delete(`${host}${config.userAPI}/${userId}`)
+      .then(res => {
+        dispatch(apiActions.userAPIActions.deleteUserSuccessful(res));
+      })
+      .catch(err => {
+        dispatch(apiActions.userAPIActions.deleteUserFailed());
+      });
+  }
 }
 
 export function deleteAllUsers() {
-  axios
-    .delete(`${host}${config.userAPI}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .delete(`${host}${config.userAPI}`)
+      .then(res => {
+        dispatch(apiActions.userAPIActions.deleteAllUsersSuccessful(res));
+      })
+      .catch(err => {
+        dispatch(apiActions.userAPIActions.deleteAllUsersFailed());
+      });
+  }
 }
 
 /*********************************API DHT*************************************/
 export function getAllDHTData() {
-  axios
-    .get(`${host}${config.DHTAPI}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .get(`${host}${config.DHTAPI}`)
+      .then(res => {
+        dispatch(apiActions.dhtAPIActions.getAllDHTDataSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.dhtAPIActions.getAllDHTDataFailed());
+      });
+  }
 }
 
 export function getLastestRecordDHT() {
-  axios
-    .get(`${host}${config.DHTAPI}/lastestrecord`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .get(`${host}${config.DHTAPI}/lastestrecord`)
+      .then(res => {
+        dispatch(apiActions.dhtAPIActions.getLastestRecordDHTSuccessful(res.data));
+      })
+      .catch(err => {
+        dispatch(apiActions.dhtAPIActions.getLastestRecordDHTFailed());
+      });
+  }
 }
 
 export function deleteAllDHTData() {
-  axios
-    .delete(`${host}${config.DHTAPI}`)
-    .then(res => {
-      console.log(JSON.stringify(res.data));
-    })
-    .catch(err => {
-      console.log(JSON.stringify(err));
-    });
+  return dispatch => {
+    return axios
+      .delete(`${host}${config.DHTAPI}`)
+      .then(res => {
+        dispatch(apiActions.dhtAPIActions.deleteAllDHTDataSuccessful(res));
+      })
+      .catch(err => {
+        dispatch(apiActions.dhtAPIActions.deleteAllDHTDataFailed());
+      });
+  }
 }

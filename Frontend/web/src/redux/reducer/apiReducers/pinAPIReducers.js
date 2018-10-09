@@ -8,7 +8,7 @@ const initialState = {
 
 export function getAllPins(state = initialState, action) {
   switch (action.type) {
-    case pinAPITypes.GET_ALL_PIN_SUSCCESS:
+    case pinAPITypes.GET_ALL_PINS_SUCCESSFUL:
       return {
         ...state,
         status: SUCCESSFUL,

@@ -1,8 +1,9 @@
 import { pinAPITypes } from "../actionTypes";
-export function getAllPinSuccessful(data) {
+
+export function getAllPinsSuccessful(data) {
   return { type: pinAPITypes.GET_ALL_PINS_SUCCESSFUL, data };
 }
-export function getAllPinFailed() {
+export function getAllPinsFailed() {
   return { type: pinAPITypes.GET_ALL_PINS_FAILED };
 }
 export function getPinNumberSuccessful(data) {

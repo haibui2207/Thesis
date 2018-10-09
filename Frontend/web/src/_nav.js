@@ -51,7 +51,7 @@ export default {
       icon: "icon-logout"
     },
     {
-      name: "Try it on GitHub",
+      name: "Custom Yourself",
       url: "https://github.com/haibui2207/Thesis",
       icon: "icon-social-github",
       class: "mt-auto",
