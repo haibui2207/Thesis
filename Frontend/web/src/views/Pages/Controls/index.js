@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getAllPins, updatePinNumber } from "../../../httpRequest";
+import { getAllPins, updatePinNumber, resetAllPin } from "../../../httpRequest";
 import { SUCCESSFUL } from "../../../constants"
 
 import { Card, CardBody, CardHeader, Col, Table, Row } from 'reactstrap';
@@ -12,6 +12,7 @@ class Controls extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       pinsUsed: [
         { pin: 2, key: kitKey002, label: "Door" },
         { pin: 4, key: kitKey002, label: "Light bath room" },
@@ -44,12 +45,15 @@ class Controls extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.state.pins === nextProps.getPins.data ? false : true;
+    return this.state === nextState ? false : true;
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.getPins.status === SUCCESSFUL) {
       this.setState({ pins: newProps.getPins.data });
+    }
+    if (newProps.resetPins.status === SUCCESSFUL) {
+      this.setState({ loading: false });
     }
   }
 
@@ -75,6 +79,11 @@ class Controls extends Component {
   handleToggle = async ({ pin, key, state }) => {
     await this.props.updatePinNumber({ pin, key, state: state === 0 ? 1 : 0 });
     this.props.getAllPins();
+  }
+
+  handleReset = async () => {
+    this.setState({ loading: true });
+    await this.props.resetAllPin();
   }
 
   render() {
@@ -108,6 +117,19 @@ class Controls extends Component {
             <Card>
               <CardHeader>
                 Monitoring
+                <div className="card-header-actions">
+                  <a
+                    style={{ cursor: "pointer" }}
+                    className="card-header-action btn btn-setting"
+                    onClick={this.handleReset}
+                  >
+                    {
+                      this.state.loading === true
+                        ? <i className="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+                        : <i className="fa fa-rotate-left fa-lg"></i>
+                    }
+                  </a>
+                </div>
               </CardHeader>
               <CardBody className="p-0">
                 <Table hover striped className="table-align-middle mb-0">
@@ -133,7 +155,8 @@ class Controls extends Component {
 
 const mapStateToProps = state => {
   return {
-    getPins: state.getPins
+    getPins: state.getPins,
+    resetPins: state.resetPins
   };
 };
 
@@ -141,7 +164,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getAllPins,
-      updatePinNumber
+      updatePinNumber,
+      resetAllPin
     },
     dispatch
   );
