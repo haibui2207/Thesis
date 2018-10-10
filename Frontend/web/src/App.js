@@ -24,8 +24,7 @@ class App extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // this.setState({ isLoggedIn: newProps.isLoggedIn });
-    this.setState({ isLoggedIn: true });
+    this.setState({ isLoggedIn: newProps.isLoggedIn });
   }
 
   render() {

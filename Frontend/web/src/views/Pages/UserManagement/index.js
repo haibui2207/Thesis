@@ -52,7 +52,7 @@ class UserManagement extends Component {
         </td>
 
         <td className="text-center">
-          <i class="icons font-2xl d-block cui-user"></i>
+          <i className="icons font-2xl d-block cui-user"></i>
         </td>
 
         <td className="text-center">
@@ -61,7 +61,7 @@ class UserManagement extends Component {
 
         <td className="text-center">
           <a role="button" style={{ cursor: "pointer", color: "#20a8d8" }}>
-            <i class="icons font-2xl d-block cui-brush"></i>
+            <i className="icons font-2xl d-block cui-brush"></i>
           </a>
         </td>
       </tr>);

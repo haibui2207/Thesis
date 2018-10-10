@@ -13,6 +13,7 @@ class Controls extends Component {
     super(props);
     this.state = {
       loading: false,
+      intervalId: 0,
       pinsUsed: [
         { pin: 2, key: kitKey002, label: "Door" },
         { pin: 4, key: kitKey002, label: "Light bath room" },
@@ -37,11 +38,14 @@ class Controls extends Component {
   }
 
   componentDidMount() {
-    setInterval(() => this.props.getAllPins(), 5000);
+    let intervalId = setInterval(() => this.props.getAllPins(), 5000);
+    this.setState({
+      intervalId: intervalId
+    })
   }
 
   componentWillUnmount() {
-    clearInterval();
+    clearInterval(this.state.intervalId);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -84,6 +88,7 @@ class Controls extends Component {
   handleReset = async () => {
     this.setState({ loading: true });
     await this.props.resetAllPin();
+    this.props.getAllPins();
   }
 
   render() {
