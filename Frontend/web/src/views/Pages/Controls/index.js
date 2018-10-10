@@ -97,8 +97,8 @@ class Controls extends Component {
         <td className="text-center">
           {
             Number(item.state) === 1
-              ? <i className="fa fa-lightbulb-o fa-lg" style={{ color: "green" }}></i>
-              : <i className="fa fa-lightbulb-o fa-lg" style={{ color: "#a2adb6" }}></i>
+              ? <i className="far fa-lightbulb fa-lg" style={{ color: "green" }}></i>
+              : <i className="fas fa-lightbulb fa-lg" style={{ color: "#a2adb6" }}></i>
           }
         </td>
         <td className="text-center">

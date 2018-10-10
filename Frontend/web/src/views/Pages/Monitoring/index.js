@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { getLastestRecordDHT, deleteAllDHTData } from "../../../httpRequest";
 import { SUCCESSFUL } from "../../../constants";
 import { Row, Col, Card, CardHeader, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
+import Widget01 from './Widget01';
 
 class Monitoring extends Component {
   constructor(props) {
@@ -165,6 +166,32 @@ class Monitoring extends Component {
                 </ListGroup>
               </CardBody>
             </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="6" sm="3">
+            <Widget01 color="success" header="Light" icon="fas fa-lightbulb" mainText="Living room" />
+          </Col>
+          <Col xs="6" sm="3">
+            <Widget01 color="info" header="Light" mainText="Bath room" />
+          </Col>
+          <Col xs="6" sm="3">
+            <Widget01 color="warning" header="Light" mainText="Kichen" />
+          </Col>
+          <Col xs="6" sm="3">
+            <Widget01 color="danger" value="95" header="Light" mainText="Gate!" />
+          </Col>
+          <Col xs="6" sm="3">
+            <Widget01 color="primary" variant="inverse" header="Light" mainText="Bedroom" />
+          </Col>
+          <Col xs="6" sm="3">
+            <Widget01 color="warning" variant="inverse" header="Others" mainText="Door" icon="fas fa-door-open" />
+          </Col>
+          <Col xs="6" sm="3">
+            <Widget01 color="danger" variant="inverse" header="Others" mainText="Fire" icon="fab fa-gripfire" />
+          </Col>
+          <Col xs="6" sm="3">
+            <Widget01 color="info" variant="inverse" value="95" header="Others" mainText="Motion" icon="fas fa-walking" />
           </Col>
         </Row>
       </div>
