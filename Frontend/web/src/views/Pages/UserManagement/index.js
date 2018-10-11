@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Row, Table, } from 'reactstrap';
 import { getAllUsers } from "../../../httpRequest";
-import { SUCCESSFUL } from "../../../constants"
+import { SUCCESSFUL, MALE } from "../../../constants"
 
 class UserManagement extends Component {
   constructor(props) {
@@ -52,16 +52,20 @@ class UserManagement extends Component {
         </td>
 
         <td className="text-center">
-          <i className="icons font-2xl d-block cui-user"></i>
+          {
+            user.gender === MALE
+              ? <i className="fas fa-mars fa-2x"></i>
+              : <i className="fas fa-venus fa-2x"></i>
+          }
         </td>
 
         <td className="text-center">
-          <i className="flag-icon flag-icon-vn h4 mb-0" title="vn" id="vn"></i>
+          {user.email}
         </td>
 
         <td className="text-center">
           <a role="button" style={{ cursor: "pointer", color: "#20a8d8" }}>
-            <i className="icons font-2xl d-block cui-brush"></i>
+            <i className="fas fa-user-edit fa-2x"></i>
           </a>
         </td>
       </tr>);
@@ -75,7 +79,7 @@ class UserManagement extends Component {
               <th className="text-center">Name</th>
               <th className="text-center">Username</th>
               <th className="text-center">Gender</th>
-              <th className="text-center">National</th>
+              <th className="text-center">Email</th>
               <th className="text-center">Edit</th>
             </tr>
           </thead>
