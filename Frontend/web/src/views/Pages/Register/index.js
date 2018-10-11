@@ -23,7 +23,6 @@ class Register extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log(newProps);
     if (newProps.createUserResponse.status === SUCCESSFUL) {
       if (newProps.loginResponse.status === SUCCESSFUL && newProps.loginResponse.isLoggedIn) {
         this.setState({
