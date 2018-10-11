@@ -131,7 +131,7 @@ class Controls extends Component {
                     {
                       this.state.loading === true
                         ? <i className="fa fa-spinner fa-spin fa-1x fa-fw"></i>
-                        : <i className="fa fa-rotate-left fa-lg"></i>
+                        : <i className="fas fa-sync-alt fa-lg"></i>
                     }
                   </a>
                 </div>

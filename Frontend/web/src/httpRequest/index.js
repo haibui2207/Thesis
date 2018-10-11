@@ -52,7 +52,6 @@ export function updatePinNumber({ pin, key, state }) {
     key: key,
     state: state
   };
-  console.log(data);
   return dispatch => {
     return axios
       .post(`${host}${config.pinAPI}`, data)
