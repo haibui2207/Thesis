@@ -72,7 +72,11 @@ class UserManagement extends Component {
 
     return <div className="animated fadeIn">
       <Row>
-        <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
+        <Table
+          hover
+          responsive
+          className="table-outline mb-0 d-sm-table"
+          style={{ minWidth: "300px", overflow: "auto" }}>
           <thead className="thead-light">
             <tr>
               <th className="text-center"><i className="icon-people"></i></th>

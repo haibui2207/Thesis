@@ -3,6 +3,7 @@ import axios from "axios";
 import apiActions from "../redux/actions";
 
 let host = `${config.host}:${config.port}`;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // api.getAllPins();
 // api.getPinNumber(14, 'KIT001');

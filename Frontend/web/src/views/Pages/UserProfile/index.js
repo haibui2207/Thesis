@@ -141,13 +141,13 @@ class UserProfile extends Component {
                 </div>
               </FormGroup>
               <FormGroup row className="my-0" style={{ display: this.state.isChangePassword ? "flex" : "none" }}>
-                <Col xs="6">
+                <Col xs="12" md="6">
                   <FormGroup>
                     <Label htmlFor="city">New Password</Label>
                     <Input type="password" name="password" placeholder="New password" onChange={this.handleInputChange} onFocus={this.removeError} />
                   </FormGroup>
                 </Col>
-                <Col xs="6">
+                <Col xs="12" md="6">
                   <FormGroup>
                     <Label htmlFor="postal-code">Confirm New Password</Label>
                     <Input type="password" name="confirmPassword" placeholder="Confirm new password" onChange={this.handleInputConfirmPasswordChange} onFocus={this.removeError} />
@@ -209,7 +209,7 @@ class UserProfile extends Component {
             </CardBody>
             <CardFooter className="text-right">
               <Row style={{ alignItems: "center" }}>
-                <Col xs="6">
+                <Col xs="12" md="6">
                   <Alert
                     color="success"
                     style={{ display: this.state.isUpdateSuccess ? 'block' : 'none', margin: "0", padding: "0 15px", textAlign: "left" }}
@@ -223,7 +223,7 @@ class UserProfile extends Component {
                     {this.state.message}
                   </Alert>
                 </Col>
-                <Col xs="6">
+                <Col xs="12" sm="6">
                   <Button type="submit" color="primary" onClick={this.updateProfile} style={{ marginRight: "20px" }}>
                     <i className="fa fa-dot-circle-o"></i> Update
               </Button>
