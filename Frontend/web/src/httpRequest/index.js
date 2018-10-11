@@ -167,24 +167,26 @@ export function getUserByRfid(rfidCode) {
 }
 
 export function updateUserInfo({
+  id,
   name,
   username,
   password,
   gender,
   email,
-  rfidCode
+  rfid
 }) {
   const data = {
+    id: id,
     name: name,
     username: username,
     email: email,
     password: password,
-    rfid: rfidCode,
+    rfid: rfid,
     gender: gender
   };
   return dispatch => {
     return axios
-      .post(`${host}${config.userAPI}/rfid/${rfidCode}`, data)
+      .put(`${host}${config.userAPI}`, data)
       .then(res => {
         dispatch(apiActions.userAPIActions.updateUserInfoSuccessful(res.data));
       })

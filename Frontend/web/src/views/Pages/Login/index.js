@@ -81,6 +81,7 @@ class Login extends Component {
       this.onClickLogin(event);
     }
   };
+  
   render() {
     return (
       <div className="app flex-row align-items-center">
