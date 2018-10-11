@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getLastestRecordDHT, deleteAllDHTData } from "../../../httpRequest";
+import { getAllPins, updatePinNumber, getLastestRecordDHT, deleteAllDHTData } from "../../../httpRequest";
 import { SUCCESSFUL } from "../../../constants";
 import { Row, Col, Card, CardHeader, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
 import Widget01 from './Widget01';
+import { kitKey002 } from "../../../httpRequest/config"
 
 class Monitoring extends Component {
   constructor(props) {
@@ -24,17 +25,32 @@ class Monitoring extends Component {
         { temperature: 28, humidity: 49 },
         { temperature: 20, humidity: 65 },
         { temperature: 37, humidity: 49 }
+      ],
+      pinsUsed: [
+        { pin: 13, key: kitKey002, header: "Light", mainText: "Gate", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
+        { pin: 5, key: kitKey002, header: "Light", mainText: "Living room", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
+        { pin: 4, key: kitKey002, header: "Light", mainText: "Bath room", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
+        { pin: 14, key: kitKey002, header: "Light", mainText: "Bedroom", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
+        { pin: 12, key: kitKey002, header: "Light", mainText: "Kitchen", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
+        { pin: 2, key: kitKey002, header: "Others", mainText: "Door", color: "warning", iconOn: 'fas fa-door-open', iconOff: 'fas fa-door-closed', isClicked: true },
+        { pin: 3, key: kitKey002, header: "Others", mainText: "Fire", color: "danger", iconOn: 'fab fa-gripfire', iconOff: 'fas fa-fire-extinguisher', isClicked: false },
+        { pin: 9, key: kitKey002, header: "Others", mainText: "Motion", color: "info", iconOn: 'fas fa-walking', iconOff: 'fas fa-male', isClicked: false },
+      ],
+      pins: [
+        { pin: 2, key: kitKey002, state: 0 }
       ]
     }
   }
 
   componentWillMount() {
-    clearInterval();
+    this.props.getLastestRecordDHT();
+    this.props.getAllPins();
   }
 
   componentDidMount() {
     let intervalId = setInterval(() => {
       this.props.getLastestRecordDHT();
+      this.props.getAllPins();
     }, 10000);
     this.setState({
       intervalId: intervalId
@@ -56,9 +72,12 @@ class Monitoring extends Component {
     if (newProps.deleteDHTData.status === SUCCESSFUL) {
       this.setState({ loading: false });
     }
+    if (newProps.getPins.status === SUCCESSFUL) {
+      this.setState({ pins: newProps.getPins.data });
+    }
   }
 
-  removeAll = async () => {
+  removeAllDHTData = async () => {
     this.setState({ loading: true });
     await this.props.deleteAllDHTData();
     this.setState({
@@ -66,8 +85,37 @@ class Monitoring extends Component {
     });
   }
 
+  renderPin = () => {
+    let result = [];
+
+    this.state.pinsUsed.map(a => {
+      this.state.pins.forEach(b => {
+        if (Number(a.pin) === Number(b.pin) && a.key === b.key) {
+          result.push({
+            pin: a.pin,
+            key: a.key,
+            header: a.header,
+            state: b.state,
+            iconOn: a.iconOn,
+            iconOff: a.iconOff,
+            mainText: a.mainText,
+            color: a.color,
+            isClicked: a.isClicked
+          });
+        }
+      });
+    })
+
+    return result;
+  }
+
+  handleToggle = async ({ pin, key, state }) => {
+    await this.props.updatePinNumber({ pin, key, state: state === 0 ? 1 : 0 });
+    this.props.getAllPins();
+  }
+
   render() {
-    let temps = [], humis = [];
+    let temps = [], humis = [], widgets = [];
     this.state.data && this.state.data.map((item, index) => {
       if (Number(item.temperature >= 35)) {
         temps.push(
@@ -110,13 +158,46 @@ class Monitoring extends Component {
       }
     })
 
+    this.renderPin() && this.renderPin().map((item, index) => {
+      if (item.isClicked) {
+        widgets.push(
+          <Col xs="6" sm="3" key={index}>
+            <Widget01
+              color={item.color}
+              variant="inverse"
+              header={item.header}
+              icon={item.state === 0 ? item.iconOff : item.iconOn}
+              mainText={item.mainText}
+              state={item.state}
+              isClicked
+              smallText={item.smallText}
+              toggle={() => this.handleToggle({ pin: item.pin, key: item.key, state: item.state})}
+            />
+          </Col>
+        )
+      } else {
+        widgets.push(
+          <Col xs="6" sm="3" key={index}>
+            <Widget01
+              color={item.color}
+              variant="inverse"
+              header={item.header}
+              icon={item.state === 0 ? item.iconOff : item.iconOn}
+              mainText={item.mainText}
+              state={item.state}
+            />
+          </Col>
+        )
+      }
+    })
+
     return (
       <div className="animated fadeIn">
         <Row>
           <Col sm="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-thermometer0 fa-lg"></i><strong>Temperature</strong>
+                <i className="fas fa-thermometer fa-2x"></i><strong>Temperature</strong>
                 {
                   ((this.state.data.length > 0) && (this.state.data[0].temperature >= 35 || this.state.data[0].temperature <= 20)) &&
                   <span className="badge badge-danger">Warning</span>
@@ -124,12 +205,12 @@ class Monitoring extends Component {
                 <a
                   style={{ cursor: "pointer", float: "right" }}
                   className="card-header-action btn btn-setting"
-                  onClick={this.removeAll}
+                  onClick={this.removeAllDHTData}
                 >
                   {
                     this.state.loading === true
                       ? <i className="fa fa-spinner fa-spin fa-1x fa-fw"></i>
-                      : <i className="icons font-2xl d-block cui-trash"></i>
+                      : <i className="fas fa-trash-alt fa-2x"></i>
                   }
                 </a>
               </CardHeader>
@@ -143,7 +224,7 @@ class Monitoring extends Component {
           <Col sm="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-skyatlas fa-lg"></i><strong>Humidity</strong>
+                <i className="fab fa-cloudversify fa-2x"></i><strong>Humidity</strong>
                 {
                   ((this.state.data.length > 0) && (this.state.data[0].humidity >= 75 || this.state.data[0].humidity <= 50)) &&
                   <span className="badge badge-danger">Warning</span>
@@ -151,12 +232,12 @@ class Monitoring extends Component {
                 <a
                   style={{ cursor: "pointer", float: "right" }}
                   className="card-header-action btn btn-setting"
-                  onClick={this.removeAll}
+                  onClick={this.removeAllDHTData}
                 >
                   {
                     this.state.loading === true
                       ? <i className="fa fa-spinner fa-spin fa-1x fa-fw"></i>
-                      : <i className="icons font-2xl d-block cui-trash"></i>
+                      : <i className="fas fa-trash-alt fa-2x"></i>
                   }
                 </a>
               </CardHeader>
@@ -169,30 +250,7 @@ class Monitoring extends Component {
           </Col>
         </Row>
         <Row>
-          <Col xs="6" sm="3">
-            <Widget01 color="success" header="Light" icon="fas fa-lightbulb" mainText="Living room" />
-          </Col>
-          <Col xs="6" sm="3">
-            <Widget01 color="info" header="Light" mainText="Bath room" />
-          </Col>
-          <Col xs="6" sm="3">
-            <Widget01 color="warning" header="Light" mainText="Kichen" />
-          </Col>
-          <Col xs="6" sm="3">
-            <Widget01 color="danger" value="95" header="Light" mainText="Gate!" />
-          </Col>
-          <Col xs="6" sm="3">
-            <Widget01 color="primary" variant="inverse" header="Light" mainText="Bedroom" />
-          </Col>
-          <Col xs="6" sm="3">
-            <Widget01 color="warning" variant="inverse" header="Others" mainText="Door" icon="fas fa-door-open" />
-          </Col>
-          <Col xs="6" sm="3">
-            <Widget01 color="danger" variant="inverse" header="Others" mainText="Fire" icon="fab fa-gripfire" />
-          </Col>
-          <Col xs="6" sm="3">
-            <Widget01 color="info" variant="inverse" value="95" header="Others" mainText="Motion" icon="fas fa-walking" />
-          </Col>
+          {widgets}
         </Row>
       </div>
     );
@@ -202,7 +260,9 @@ class Monitoring extends Component {
 const mapStateToProps = state => {
   return {
     getLastestDHTData: state.getLastestDHTData,
-    deleteDHTData: state.deleteDHTData
+    deleteDHTData: state.deleteDHTData,
+    getPins: state.getPins,
+    resetPins: state.resetPins
   };
 };
 
@@ -210,7 +270,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getLastestRecordDHT,
-      deleteAllDHTData
+      deleteAllDHTData,
+      getAllPins,
+      updatePinNumber
     },
     dispatch
   );
