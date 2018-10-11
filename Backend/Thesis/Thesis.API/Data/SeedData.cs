@@ -39,10 +39,10 @@ namespace Thesis.API.Data
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(
-                        new User("Hai Bui", "admin", "haibui@gmail.com", "admin", "919b8459", UserRole.Admin, "male"),
-                        new User("Guest", "guest", "guest@gmail.com", "guest", "", UserRole.User, "male"),
-                        new User("Guest1", "guest1", "guest1@gmail.com", "guest1", "", UserRole.User, "female"),
-                        new User("Guest2", "guest2", "guest2@gmail.com", "guest2", "", UserRole.User, "female")
+                        new User("Hai Bui", "admin", "haibui@gmail.com", "admin", "919b8459", UserRole.Admin, Gender.Male),
+                        new User("Guest", "guest", "guest@gmail.com", "guest", "", UserRole.User, Gender.Male),
+                        new User("Guest1", "guest1", "guest1@gmail.com", "guest1", "", UserRole.User, Gender.Female),
+                        new User("Guest2", "guest2", "guest2@gmail.com", "guest2", "", UserRole.User, Gender.Female)
                     );
 
                 }
