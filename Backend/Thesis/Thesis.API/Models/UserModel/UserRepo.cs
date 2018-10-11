@@ -110,6 +110,14 @@ namespace Thesis.API.Models.UserModel
                     {
                         updatedUser.RFID = user.RFID;
                     }
+                    if (!String.IsNullOrEmpty(user.gender))
+                    {
+                        updatedUser.gender = user.gender;
+                    }
+                    if (!String.IsNullOrEmpty(user.email))
+                    {
+                        updatedUser.email = user.email;
+                    }
                     if (!String.IsNullOrEmpty(user.role))
                     {
                         if (user.role == UserRole.Admin || user.role == UserRole.User)
