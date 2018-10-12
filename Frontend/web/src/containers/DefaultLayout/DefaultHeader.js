@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
-import logo from "../../assets/img/brand/logo.svg";
-import sygnet from "../../assets/img/brand/sygnet.svg";
+import logo from "../../assets/img/logo.png";
+import subLogo from "../../assets/img/sub-logo.png";
 
 const propTypes = {
   children: PropTypes.node
@@ -21,12 +21,12 @@ class DefaultHeader extends Component {
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <div style={{display: 'flex'}}>
           <AppNavbarBrand
-            full={{ src: logo, width: 89, height: 25, alt: "CoreUI Logo" }}
+            full={{ src: logo, height: 50, alt: "Logo" }}
             minimized={{
-              src: sygnet,
+              src: subLogo,
               width: 30,
               height: 30,
-              alt: "CoreUI Logo"
+              alt: "Logo"
             }}
           />
           <AppSidebarToggler className="d-md-down-none" display="lg" />
