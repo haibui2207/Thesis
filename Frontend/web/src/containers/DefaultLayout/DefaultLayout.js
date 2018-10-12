@@ -29,25 +29,31 @@ class DefaultLayout extends Component {
     super(props);
 
     this.state = {
-      navigation: {}
+      navigation: {},
+      routes: []
     }
   }
 
   componentWillMount() {
     const tempNavs = { };
     tempNavs.items = [...navigation.items];
+    const tempRoutes = [...routes];
     if (this.props.loginResponse.data.role === USER) {
       const newNavs = { };
       newNavs.items = [...navigation.items];
+      const newRoutes = [...routes];
       if (!(newNavs.items.findIndex(item => item.name === "Users") === -1)) {
         newNavs.items.splice(newNavs.items.findIndex(item => item.name === "Users"), 1);
+        newRoutes.splice(newRoutes.findIndex(item => item.name === "Users"))
         this.setState({
-          navigation: newNavs
+          navigation: newNavs,
+          routes: newRoutes
         })
       }
     } else {
       this.setState({
-        navigation: tempNavs
+        navigation: tempNavs,
+        routes: tempRoutes
       })
     }
   }
@@ -67,10 +73,10 @@ class DefaultLayout extends Component {
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={routes} />
+            <AppBreadcrumb appRoutes={this.state.routes} />
             <Container fluid>
               <Switch>
-                {routes.map((route, idx) => {
+                {this.state.routes.map((route, idx) => {
                   return route.component ? (<Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
                     <route.component {...props} />
                   )} />)
