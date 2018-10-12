@@ -26,7 +26,8 @@ class UserProfile extends Component {
       message: '',
       isChangePassword: false,
       isShowRfid: false,
-      isUpdateSuccess: false
+      isUpdateSuccess: false,
+      loading: false
     }
   }
 
@@ -44,11 +45,13 @@ class UserProfile extends Component {
 
     if (newProps.updateUser.status === SUCCESSFUL) {
       this.setState({
+        loading: false,
         isUpdateSuccess: true,
         message: "Update Successful."
       })
     } else if (newProps.updateUser.status === FAILED) {
       this.setState({
+        loading: false,
         showError: true,
         message: "Update Failed."
       })
@@ -95,7 +98,7 @@ class UserProfile extends Component {
     });
   }
 
-  updateProfile = () => {
+  updateProfile = async () => {
     const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (!this.state.userInfo.name || !this.state.userInfo.email) {
       this.setState({
@@ -113,7 +116,10 @@ class UserProfile extends Component {
         message: "Password not match."
       })
     } else {
-      this.props.updateUserInfo(this.state.userInfo);
+      this.setState({
+        loading: true
+      })
+      await this.props.updateUserInfo(this.state.userInfo);
     }
   }
 
@@ -240,11 +246,15 @@ class UserProfile extends Component {
                   </Col>
                   <Col xs="12" sm="6">
                     <Button type="submit" color="primary" onClick={this.updateProfile} style={{ marginRight: "20px" }}>
-                      <i className="fa fa-dot-circle-o"></i> Update
-              </Button>
-                    <Button type="button" color="danger" onClick={() => this.props.history.push('/dashboard')}>
+                      {
+                        this.state.loading
+                          ? <i className="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+                          : <i className="fas fa-save"></i>
+                      } Update
+                    </Button>
+                    <Button type="button" color="secondary" onClick={() => this.props.history.push('/dashboard')}>
                       <i className="fa fa-ban"></i> Cancel
-              </Button>
+                    </Button>
                   </Col>
                 </Row>
               </CardFooter>

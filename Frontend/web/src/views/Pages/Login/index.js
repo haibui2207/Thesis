@@ -37,7 +37,6 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log(newProps);
     if (newProps.loginResponse.status === SUCCESSFUL && newProps.loginResponse.isLoggedIn) {
       this.setState({
         showError: false,
