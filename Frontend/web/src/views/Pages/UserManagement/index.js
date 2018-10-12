@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Row, Table, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Col, Card, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon } from 'reactstrap';
-import { getAllUsers, updateUserInfo } from "../../../httpRequest";
+import { getAllUsers, updateUserInfo, deleteUser } from "../../../httpRequest";
 import { resetUpdateUserInfoStatus } from "../../../redux/actions/apiActions/userAPIActions"
 import { SUCCESSFUL, FAILED, MALE, FEMALE } from "../../../constants"
 
@@ -25,12 +25,15 @@ class UserManagement extends Component {
       ],
       chosenUser: 0,
       isShownModal: false,
+      isShownNestedModal: false,
       confirmPassword: '',
       showError: false,
       message: '',
       isChangePassword: false,
       isShowRfid: false,
-      isUpdateSuccess: false
+      isUpdateSuccess: false,
+      loading: false,
+      deleteLoading: false
     }
   }
 
@@ -39,6 +42,7 @@ class UserManagement extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    console.log(newProps)
     if (newProps.getUsers.status === SUCCESSFUL) {
       this.setState({
         users: newProps.getUsers.data
@@ -47,14 +51,30 @@ class UserManagement extends Component {
 
     if (newProps.updateUser.status === SUCCESSFUL) {
       this.setState({
+        loading: false,
         isUpdateSuccess: true,
         message: "Update Successful."
       })
     } else if (newProps.updateUser.status === FAILED) {
       this.setState({
+        loading: false,
         showError: true,
         message: "Update Failed."
       })
+    } else {
+      this.setState({
+        isUpdateSuccess: false,
+        showError: false,
+        message: ""
+      })
+    }
+
+    if (newProps.deleteUserResponse.status === SUCCESSFUL) {
+      this.setState({
+        deleteLoading: false,
+        isShownModal: false,
+        isShownNestedModal: false,
+      });
     }
   }
 
@@ -75,20 +95,20 @@ class UserManagement extends Component {
   }
 
   handleInputChange = event => {
-    let newInfo = this.state.users;
-    newInfo[this.state.chosenUser][event.target.name] = event.target.value;
+    let updatedUsers = this.state.users;
+    updatedUsers[this.state.chosenUser][event.target.name] = event.target.value;
     this.setState({
-      userInfo: newInfo
+      users: updatedUsers
     });
   };
 
   handleGender = event => {
-    let newInfo = this.state.users;
-    newInfo[this.state.chosenUser][event.target.name] = event.target.value;
+    let updatedUsers = this.state.users;
+    updatedUsers[this.state.chosenUser][event.target.name] = event.target.value;
     this.setState({
       isUpdateSuccess: false,
       showError: false,
-      userInfo: newInfo
+      users: updatedUsers
     });
   }
 
@@ -98,7 +118,7 @@ class UserManagement extends Component {
     });
   }
 
-  updateProfile = () => {
+  updateProfile = async () => {
     const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (!this.state.users[this.state.chosenUser].name || !this.state.users[this.state.chosenUser].email) {
       this.setState({
@@ -116,7 +136,10 @@ class UserManagement extends Component {
         message: "Password not match."
       })
     } else {
-      this.props.updateUserInfo(this.state.users[this.state.chosenUser]);
+      this.setState({
+        loading: true
+      })
+      await this.props.updateUserInfo(this.state.users[this.state.chosenUser]);
     }
   }
 
@@ -128,6 +151,8 @@ class UserManagement extends Component {
   };
 
   openModal = index => {
+    this.props.resetUpdateUserInfoStatus();
+    index = Number(index) ? index : 0;
     this.setState({
       chosenUser: index,
       isShownModal: !this.state.isShownModal
@@ -139,14 +164,34 @@ class UserManagement extends Component {
       isShownModal: !this.state.isShownModal,
       isShowRfid: false,
       isChangePassword: false,
-      showError: false,
+      showError: false
     });
+  }
+
+  openNestedModal = () => {
+    this.setState({
+      isShownNestedModal: !this.state.isShownNestedModal,
+    });
+  }
+
+  closeNestedModal = () => {
+    this.setState({
+      isShownNestedModal: !this.state.isShownNestedModal,
+    });
+  }
+
+  closeAllModal = async userId => {
+    this.setState({
+      deleteLoading: true
+    })
+    await this.props.deleteUser(userId)
+    await this.props.getAllUsers()
   }
 
   render() {
     const tableBody = this.state.users.map((user, index) => {
       return user.id !== this.props.loginResponse.data.id && (
-        <tr key={index}>
+        <tr key={index} style={{ cursor: "pointer" }} onClick={() => this.openModal(index)}>
           <td className="text-center">
             <div className="avatar">
               <img src={'assets/img/avatars/user-avatar-default.png'} className="img-avatar" alt="admin@bootstrapmaster.com" />
@@ -307,32 +352,51 @@ class UserManagement extends Component {
                     </FormGroup>
                   </CardBody>
                 </Card>
+                <Col xs="12">
+                  <Alert
+                    color="success"
+                    style={{ display: this.state.isUpdateSuccess ? 'block' : 'none', margin: "0", padding: "0 15px", textAlign: "left" }}
+                  >
+                    {this.state.message}
+                  </Alert>
+                  <Alert
+                    color="danger"
+                    style={{ display: this.state.showError ? 'block' : 'none', margin: "0", padding: "0 15px", textAlign: "left" }}
+                  >
+                    {this.state.message}
+                  </Alert>
+                </Col>
               </Col>
+
+              <Modal isOpen={this.state.isShownNestedModal} toggle={this.openNestedModal} style={{ top: "20%" }}>
+                <ModalHeader>Warning</ModalHeader>
+                <ModalBody><h3 style={{ color: "red" }}><b>Do you know what you are doing?</b></h3></ModalBody>
+                <ModalFooter>
+                  <Button type="button" color="primary" onClick={this.closeNestedModal}>
+                    <i className="fas fa-times"></i> Not Sure
+                </Button>
+                  <Button type="button" color="danger" onClick={() => this.closeAllModal(this.state.users[this.state.chosenUser].id)}>
+                    {
+                      this.state.deleteLoading
+                        ? <i className="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+                        : <i className="fas fa-check" ></i>
+                    } Yes
+                </Button>
+                </ModalFooter>
+              </Modal>
             </Row>
           </ModalBody>
           <ModalFooter className="text-right">
-            <Col xs="12" sm="6" md="8">
-              <Alert
-                color="success"
-                style={{ display: this.state.isUpdateSuccess ? 'block' : 'none', margin: "0", padding: "0 15px", textAlign: "left" }}
-              >
-                {this.state.message}
-              </Alert>
-              <Alert
-                color="danger"
-                style={{ display: this.state.showError ? 'block' : 'none', margin: "0", padding: "0 15px", textAlign: "left" }}
-              >
-                {this.state.message}
-              </Alert>
-            </Col>
-            <Col xs="12" sm="6" md="4">
-              <Button type="submit" color="primary" onClick={this.updateProfile} style={{ marginRight: "20px" }}>
-                <i className="fa fa-dot-circle-o"></i> Update
-                        </Button>
-              <Button type="button" color="secondary" onClick={this.closeModal}>
-                <i className="fa fa-ban"></i> Close
-                        </Button>
-            </Col>
+            <Button type="button" color="primary" onClick={this.updateProfile} style={{ marginRight: "20px" }}>
+              {
+                this.state.loading
+                  ? <i className="fa fa-spinner fa-spin fa-1x fa-fw"></i>
+                  : <i className="fas fa-save"></i>
+              } Update
+              </Button>
+            <Button type="button" color="danger" onClick={this.openNestedModal}>
+              <i className="fas fa-trash"></i> Remove
+              </Button>
           </ModalFooter>
         </Modal>
       </div>
@@ -345,7 +409,8 @@ const mapStateToProps = state => {
     loginResponse: state.login,
     getUsers: state.getUsers,
     userProfile: state.getProfile,
-    updateUser: state.updateUser
+    updateUser: state.updateUser,
+    deleteUserResponse: state.deleteUser
   };
 };
 
@@ -354,7 +419,8 @@ const mapDispatchToProps = dispatch =>
     {
       getAllUsers,
       updateUserInfo,
-      resetUpdateUserInfoStatus
+      resetUpdateUserInfoStatus,
+      deleteUser
     },
     dispatch
   );
