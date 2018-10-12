@@ -17,6 +17,8 @@ export function login(state = initialState, action) {
       };
     case userAPITypes.LOGIN_FAILED:
       return { ...state, status: FAILED, isLoggedIn: false };
+    case userAPITypes.RESET:
+      return { data: null, status: "", isLoggedIn: false };
     default:
       return state;
   }
@@ -72,6 +74,8 @@ export function updateUserInfo(state = initialState, action) {
       return { ...state, status: SUCCESSFUL, data: action.data };
     case userAPITypes.UPDATE_USER_INFO_FAILED:
       return { ...state, status: FAILED };
+    case userAPITypes.RESET_UPDATE_USER_INFO_STATUS:
+      return { ...state, status: "" };
     default:
       return state;
   }

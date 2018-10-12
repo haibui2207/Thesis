@@ -17,7 +17,8 @@ import {
   Alert
 } from "reactstrap";
 import { login } from "../../../httpRequest";
-import { SUCCESSFUL } from "../../../constants"
+import { reset } from "../../../redux/actions/apiActions/userAPIActions"
+import { SUCCESSFUL, FAILED } from "../../../constants"
 
 class Login extends Component {
   constructor(props) {
@@ -32,20 +33,18 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    this.props.login({
-      username: this.state.username,
-      password: this.state.password
-    });
+    this.props.reset();
   }
 
   componentWillReceiveProps(newProps) {
+    console.log(newProps);
     if (newProps.loginResponse.status === SUCCESSFUL && newProps.loginResponse.isLoggedIn) {
       this.setState({
         showError: false,
         message: ""
       });
       this.props.history.push("/dashboard");
-    } else {
+    } else if (newProps.loginResponse.status === FAILED) {
       this.setState({
         showError: true,
         message: "Login Failed!"
@@ -81,7 +80,7 @@ class Login extends Component {
       this.onClickLogin(event);
     }
   };
-  
+
   render() {
     return (
       <div className="app flex-row align-items-center">
@@ -177,14 +176,16 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    loginResponse: state.login
+    loginResponse: state.login,
+    reset: state.reset
   };
 };
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      login
+      login,
+      reset
     },
     dispatch
   );

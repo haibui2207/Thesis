@@ -1,5 +1,8 @@
 import { userAPITypes } from "../actionTypes";
 
+export function reset() {
+  return { type: userAPITypes.RESET };
+}
 export function loginSuccessful(data) {
   return { type: userAPITypes.LOGIN_SUCCESSFUL, data };
 }
@@ -35,6 +38,9 @@ export function updateUserInfoSuccessful(data) {
 }
 export function updateUserInfoFailed() {
   return { type: userAPITypes.UPDATE_USER_INFO_FAILED };
+}
+export function resetUpdateUserInfoStatus() {
+  return { type: userAPITypes.RESET_UPDATE_USER_INFO_STATUS };
 }
 export function deleteUserSuccessful(data) {
   return { type: userAPITypes.DELETE_USER_SUCCESSFUL, data };

@@ -52,7 +52,7 @@ export default {
     },
     {
       name: "Custom Yourself",
-      url: "https://github.com/haibui2207/Thesis",
+      url: "https://github.com/haibui2207/Thesis/tree/master/Frontend/web",
       icon: "icon-social-github",
       class: "mt-auto",
       variant: "danger"
