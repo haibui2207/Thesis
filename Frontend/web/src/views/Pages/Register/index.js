@@ -29,13 +29,9 @@ class Register extends Component {
           showError: false,
           message: ""
         });
-        this.props.history.push("/dashboard");
+        this.props.history.push("/users");
         return;
       }
-      this.props.login({
-        username: this.state.username,
-        password: this.state.password
-      })
     }
   }
 
@@ -53,28 +49,31 @@ class Register extends Component {
 
   onSubmit = event => {
     event.preventDefault();
+    const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (!this.state.name || !this.state.username || !this.state.password || !this.state.confirmPassword) {
       this.setState({
         showError: true,
         message: 'Please fill fully field above'
       })
-      return;
-    }
-    if (this.state.password !== this.state.confirmPassword) {
+    } else if (!filter.test(this.state.email)) {
+      this.setState({
+        showError: true,
+        message: "Email invalid."
+      })
+    } else if (this.state.password !== this.state.confirmPassword) {
       this.setState({
         showError: true,
         message: 'Password not match.'
       })
-      return;
+    } else {
+      this.props.createNewUser({
+        name: this.state.name,
+        username: this.state.username,
+        password: this.state.password,
+        gender: this.state.gender,
+        email: this.state.email
+      });
     }
-
-    this.props.createNewUser({
-      name: this.state.name,
-      username: this.state.username,
-      password: this.state.password,
-      gender: this.state.gender,
-      email: this.state.email
-    });
   }
 
   onKeyDown = async event => {
@@ -153,15 +152,9 @@ class Register extends Component {
                       {this.state.message}
                     </Alert>
                     <Button color="success" onClick={this.onSubmit} block>Create Account</Button>
+                    <Button color="secondary" onClick={() => this.props.history.push("/users")} block>Go Back</Button>
                   </Form>
                 </CardBody>
-                <CardFooter className="p-4">
-                  <Row>
-                    <Col xs="12">
-                      <Button className="btn-twitter" onClick={() => this.props.history.push('/login')} block><span>Already have account</span></Button>
-                    </Col>
-                  </Row>
-                </CardFooter>
               </Card>
             </Col>
           </Row>

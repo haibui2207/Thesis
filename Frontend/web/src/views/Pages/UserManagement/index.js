@@ -231,7 +231,7 @@ class UserManagement extends Component {
 
     return (
       <div className="animated fadeIn">
-        <Row>
+        <Row style={{position: "relative"}}>
           <Table
             hover
             responsive
@@ -251,6 +251,7 @@ class UserManagement extends Component {
               {tableBody}
             </tbody>
           </Table>
+           <Button color="success" style={{position:"absolute", right: "0", bottom: "-35px"}} onClick={() => this.props.history.push('/register')}>Add New</Button>
         </Row>
         <Modal isOpen={this.state.isShownModal} toggle={this.openModal} className={this.props.className} size="lg">
           <ModalHeader

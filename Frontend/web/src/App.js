@@ -32,11 +32,11 @@ class App extends Component {
       <HashRouter>
         <Switch>
           <Route path="/login" name="Login Page" component={Login} />
-          {!this.state.isLoggedIn && (
+          {!this.state.isLoggedIn && <Redirect to="login" />}
+          
+          {this.state.isLoggedIn && (
             <Route path="/register" name="Register Page" component={Register} />
           )}
-          {!this.state.isLoggedIn && <Redirect to="login" />}
-
           {this.state.isLoggedIn && (
             <Route path="/404" name="Page 404" component={Page404} />
           )}
