@@ -11,9 +11,7 @@
     ////////////////////////////////////////////
 */
 
-const char* KIT001 = KIT_001; // Using Run rfid
 const char* KIT002 = KIT_002; // Only receive signal 
-const char* KIT003 = KIT_003; // Only send signal
 const char* ssid = WIFI_SSID;
 const char* password = WIFI_PASS;
 const char* userAPI = USER_API;

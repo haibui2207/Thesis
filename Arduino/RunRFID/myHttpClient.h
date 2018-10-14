@@ -8,7 +8,9 @@ void displayStringAsJson(String data);                              //just show 
 void displayStringAsJsonArray(String data);                         //just show data as Array
 JsonObject& convertStringToJson(String data);                       //get data
 JsonObject& getIndexAtJsonArray(String data , int index);           //get data in Array
+JsonObject& getPinInJsonArray(String data, int pin, const char* kitKey); //get data in array base on pin number and kit key
 String getHttpRespone(String URL);                                  //get response as String
+String getDataByPinAndKey(String URL ,int pin, const char* key);          //get data base on pin number and kit key
 void postData(const char* host,String data);                        //post 
 
 
@@ -93,7 +95,7 @@ JsonObject& getIndexAtJsonArray(String data , int index){
   return obj;
 }
 
-JsonObject& getPinInJsonArray(String data , int pin){
+JsonObject& getPinInJsonArray(String data, int pin, const char* kitKey){
   int len = data.length() + 1;
   int i = 0;
   char buf[len];
@@ -105,14 +107,13 @@ JsonObject& getPinInJsonArray(String data , int pin){
   //check parse
   if (!root.success()) Serial.println("parseObject() failed");
   int rootLength = root.measureLength();
-  int pinSelected;
   Serial.println(rootLength);
   for(i; i < rootLength ; i++ ){
-    pinSelected = root[i]["pin"];
-    if(pinSelected == pin) break;
+    int pinSelected = root[i]["pin"];
+    const char* keySelected = root[i]["key"];
+    if(pinSelected == pin && String(keySelected) == String(kitKey)) break;
   }
   JsonObject& obj = root[i];
-  obj.prettyPrintTo(Serial);
   return obj;
 }
 
@@ -123,6 +124,22 @@ String getHttpRespone(String URL){
   Serial.println(URL); 
   HTTPClient http;  
   http.begin(URL);  
+  int httpCode = http.GET();    
+  if (httpCode > 0) {         
+    data = http.getString();        
+  } 
+  http.end(); 
+  return data;
+}
+
+/************************************************GET DATA BY PIN AND KITKEY************************************************/
+String getDataByPinAndKey(String URL ,int pin,const char* key){
+  String data; 
+  String newURL = URL + "/getpinnumber?pin=" + String(pin) + "&key=" + String(key) ;
+  Serial.print("Connecting to host: ");
+  Serial.println(newURL); 
+  HTTPClient http;  
+  http.begin(newURL);  
   int httpCode = http.GET();    
   if (httpCode > 0) {         
     data = http.getString();        
