@@ -48,6 +48,9 @@ export function deleteUserSuccessful(data) {
 export function deleteUserFailed() {
   return { type: userAPITypes.DELETE_USER_FAILED };
 }
+export function resetDeleteUser() {
+  return { type: userAPITypes.RESET_DELETE_USER };
+}
 export function deleteAllUsersSuccessful(data) {
   return { type: userAPITypes.DELETE_ALL_USERS_SUCCESSFUL, data };
 }

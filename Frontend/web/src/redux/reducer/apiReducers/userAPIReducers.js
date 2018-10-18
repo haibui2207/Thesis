@@ -87,6 +87,8 @@ export function deleteUser(state = initialState, action) {
       return { ...state, status: SUCCESSFUL, data: action.data };
     case userAPITypes.DELETE_USER_FAILED:
       return { ...state, status: FAILED };
+    case userAPITypes.RESET_DELETE_USER:
+    return { ...state, status: "" };
     default:
       return state;
   }
