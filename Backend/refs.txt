@@ -1,0 +1,2 @@
+- Using docker on dotnet core
+https://docs.docker.com/engine/examples/dotnetcore/#create-a-dockerfile-for-an-aspnet-core-application
