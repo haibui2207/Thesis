@@ -24,12 +24,12 @@ namespace Thesis.API.Data
                 {
 
                     context.Pins.AddRange(
-                        new Pin(2, KitKey.Kit001, 0), new Pin(3, KitKey.Kit001, 0),
+                        new Pin(1, KitKey.Kit001, 0), new Pin(2, KitKey.Kit001, 0), new Pin(3, KitKey.Kit001, 0),
                         new Pin(4, KitKey.Kit001, 0), new Pin(5, KitKey.Kit001, 0),
                         new Pin(9, KitKey.Kit001, 0), new Pin(10, KitKey.Kit001, 0),
                         new Pin(12, KitKey.Kit001, 0), new Pin(13, KitKey.Kit001, 0),
                         new Pin(14, KitKey.Kit001, 0), new Pin(15, KitKey.Kit001, 0),
-                        new Pin(2, KitKey.Kit002, 0), new Pin(3, KitKey.Kit002, 0),
+                        new Pin(1, KitKey.Kit002, 0), new Pin(2, KitKey.Kit002, 0), new Pin(3, KitKey.Kit002, 0),
                         new Pin(4, KitKey.Kit002, 0), new Pin(5, KitKey.Kit002, 0),
                         new Pin(9, KitKey.Kit002, 0), new Pin(10, KitKey.Kit002, 0),
                         new Pin(12, KitKey.Kit002, 0), new Pin(13, KitKey.Kit002, 0),
@@ -40,9 +40,10 @@ namespace Thesis.API.Data
                 {
                     context.Users.AddRange(
                         new User("Hai Bui", "admin", "haibui@gmail.com", "admin", "919b8459", UserRole.Admin, Gender.Male),
-                        new User("Guest", "guest", "guest@gmail.com", "guest", "", UserRole.User, Gender.Male),
-                        new User("Guest1", "guest1", "guest1@gmail.com", "guest1", "", UserRole.User, Gender.Female),
-                        new User("Guest2", "guest2", "guest2@gmail.com", "guest2", "", UserRole.User, Gender.Female)
+                        new User("User", "user", "user@gmail.com", "user", "", UserRole.User, Gender.Male),
+                        new User("User 1", "user1", "user1@gmail.com", "user1", "", UserRole.User, Gender.Male),
+                        new User("User 2", "user2", "user2@gmail.com", "user2", "", UserRole.User, Gender.Female),
+                        new User("User 3", "user3", "user3@gmail.com", "user3", "", UserRole.User, Gender.Female)
                     );
 
                 }
