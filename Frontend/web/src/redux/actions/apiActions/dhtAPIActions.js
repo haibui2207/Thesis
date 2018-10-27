@@ -1,5 +1,8 @@
 import { dhtAPITypes } from "../actionTypes";
 
+export function reset() {
+  return { type: dhtAPITypes.GET_LATEST_DHT_DATA_RESET };
+}
 export function getAllDHTDataSuccessful(data) {
   return { type: dhtAPITypes.GET_ALL_DHT_DATA_SUCCESSFUL, data };
 }

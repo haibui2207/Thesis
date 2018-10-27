@@ -15,12 +15,14 @@ class Controls extends Component {
       loading: false,
       intervalId: 0,
       pinsUsed: [
+        { pin: 1, key: kitKey002, label: "Enable Automation" },
         { pin: 2, key: kitKey002, label: "Door" },
         { pin: 4, key: kitKey002, label: "Light bath room" },
         { pin: 5, key: kitKey002, label: "Light living room" },
         { pin: 12, key: kitKey002, label: "Light kitchen" },
         { pin: 13, key: kitKey002, label: "Light gate" },
-        { pin: 14, key: kitKey002, label: "Light bedroom" }
+        { pin: 14, key: kitKey002, label: "Light bedroom" },
+        { pin: 15, key: kitKey002, label: "Bell" }
       ],
       pins: [
         { pin: 2, key: kitKey002, state: 0 },

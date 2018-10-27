@@ -6,6 +6,7 @@ import { SUCCESSFUL } from "../../../constants";
 import { Row, Col, Card, CardHeader, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
 import Widget01 from './Widget01';
 import { kitKey002 } from "../../../httpRequest/config"
+import { reset } from "../../../redux/actions/apiActions/dhtAPIActions"
 
 class Monitoring extends Component {
   constructor(props) {
@@ -20,11 +21,6 @@ class Monitoring extends Component {
         { temperature: 28, humidity: 49 },
         { temperature: 20, humidity: 65 },
         { temperature: 37, humidity: 49 },
-        { temperature: 39, humidity: 40 },
-        { temperature: 40, humidity: 80 },
-        { temperature: 28, humidity: 49 },
-        { temperature: 20, humidity: 65 },
-        { temperature: 37, humidity: 49 }
       ],
       pinsUsed: [
         { pin: 13, key: kitKey002, header: "Light", mainText: "Gate", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
@@ -68,6 +64,7 @@ class Monitoring extends Component {
       this.setState({
         data: newData
       });
+      this.props.reset();
     }
     if (newProps.deleteDHTData.status === SUCCESSFUL) {
       this.setState({ loading: false });
@@ -117,6 +114,7 @@ class Monitoring extends Component {
   render() {
     let temps = [], humis = [], widgets = [];
     this.state.data && this.state.data.map((item, index) => {
+      console.log(item);
       if (Number(item.temperature >= 35)) {
         temps.push(
           <ListGroupItem action color="danger" key={index}>
@@ -272,7 +270,8 @@ const mapDispatchToProps = dispatch =>
       getLastestRecordDHT,
       deleteAllDHTData,
       getAllPins,
-      updatePinNumber
+      updatePinNumber,
+      reset
     },
     dispatch
   );
