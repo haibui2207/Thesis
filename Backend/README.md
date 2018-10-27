@@ -108,7 +108,8 @@
 
 	{
 		"temperature": 32,
-		"humidity": 40
+		"humidity": 40,
+		"key": "KIT001",
 	}
  
 ### # Remove all data <br/>
