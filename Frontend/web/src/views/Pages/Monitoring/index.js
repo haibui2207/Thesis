@@ -114,7 +114,6 @@ class Monitoring extends Component {
   render() {
     let temps = [], humis = [], widgets = [];
     this.state.data && this.state.data.map((item, index) => {
-      console.log(item);
       if (Number(item.temperature >= 35)) {
         temps.push(
           <ListGroupItem action color="danger" key={index}>
