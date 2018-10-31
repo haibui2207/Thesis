@@ -1,0 +1,18 @@
++web
+	docker build -t .
+	docker tag thesiswebimage haibui2207/thesis-web:latest
+	docker push haibui2207/thesis-web
+	docker run -it -p 3000:3000 haibui2207/thesis-web:latest
+
++running ngrok background
+** install jq
+	apt-get install jq -y
+** running ngrok on background
+	./ngrok http 3000 > /dev/null &
+** check ngrok URL
+	curl localhost:4040/api/tunnels
+	=> find: public url
+** stop ngrok running
+	ps -a
+	kill <ngrok_PID>
+
