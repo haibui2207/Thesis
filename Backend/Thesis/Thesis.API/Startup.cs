@@ -56,7 +56,7 @@ namespace Thesis.API
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Auto tạo DB
+            // Auto create db
             context.Database.Migrate();
         }
     }
