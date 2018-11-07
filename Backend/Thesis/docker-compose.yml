@@ -8,4 +8,4 @@ services:
       dockerfile: Dockerfile
     container_name: thesis_api
     ports:
-      - 53989:80
+      - 4000:80

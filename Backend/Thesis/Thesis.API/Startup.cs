@@ -24,7 +24,6 @@ namespace Thesis.API
             services.AddCors();
             services.AddMvc();
             // Thiết lập kết nối đến SQLite
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             services.AddDbContext<ThesisAPIContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
         }
 
@@ -57,6 +56,7 @@ namespace Thesis.API
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            // Auto tạo DB
             context.Database.Migrate();
         }
     }
