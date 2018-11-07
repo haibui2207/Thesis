@@ -1,5 +1,5 @@
-export const host = "http://localhost";
-export const port = 53959;
+export const host = "http://a3897d27.ngrok.io";
+export const port = 80;
 export const pinAPI = "/api/pin";
 export const userAPI = "/api/user";
 export const DHTAPI = "/api/dht";
