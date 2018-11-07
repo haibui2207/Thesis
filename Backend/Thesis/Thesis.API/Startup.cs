@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 using Thesis.API.Context;
 
 namespace Thesis.API
@@ -23,12 +24,12 @@ namespace Thesis.API
             services.AddCors();
             services.AddMvc();
             // Thiết lập kết nối đến SQLite
-            services.AddDbContext<ThesisAPIContext>(options =>
-                 options.UseSqlite("Data Source=ThesisAPI.db"));
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            services.AddDbContext<ThesisAPIContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ThesisAPIContext context)
         {
             if (env.IsDevelopment())
             {
@@ -55,6 +56,8 @@ namespace Thesis.API
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            context.Database.Migrate();
         }
     }
 }
