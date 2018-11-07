@@ -1,0 +1,67 @@
++Setup
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce -y
+sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+nano /etc/hosts 
+
+=> add : 127.0.1.1 <hostname>
+
+docker login
+
+
++create docker-compose.yml
+version: '3'
+
+services:
+    web:
+       image: haibui2207/thesis-web:latest
+       container_name: thesis-web
+       restart: on-failure
+       ports:
+           - "3000:3000"
+    watchtower:
+       image: v2tec/watchtower
+       container_name: watchtower
+       volumes:
+           - /var/run/docker.sock:/var/run/docker.sock
+           - /root/.docker/config.json:/config.json
+       command: --interval 300
+
++running ngrok background
+** running ngrok on background
+	./ngrok http 3000 > /dev/null &
+** check ngrok URL
+	curl localhost:4040/api/tunnels
+	=> find: public url
+** stop ngrok running
+	ps aux | grep -i ngrok
+	ps -a
+	kill <ngrok_PID>
+
++Open port Ubuntu
+sudo netstat -tulpn
+https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-16-04
+
++docker command remove container, images
+docker stop $(docker ps -a -q)
+docker rm -v $(docker ps -a -q)
+docker rmi -f $(docker images -q)
+docker rmi $(docker images -q)
+
++Access docker container run sqlserver
+docker exec -it palomino_db /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Palomino1!"
+SELECT Name FROM sys.databases
+GO

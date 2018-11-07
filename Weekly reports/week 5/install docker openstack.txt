@@ -1,0 +1,21 @@
+https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository
+step by step
+
+- error: sudo unable to resolve host
+=> https://askubuntu.com/questions/858141/sudo-unable-to-resolve-host
+
+-install docker-compose 
+https://docs.docker.com/compose/install/
+
+- login to docker by command: docker login
+
+- create docker-compose.yml
+- run command : docker-compose up
+	=> to run container from image
+
+
+- install ngrok to share localhost
+	wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+	sudo apt-get install unzip
+	unzip ngrok-stable-linux-amd64.zip
+	./ngrok http 3000
