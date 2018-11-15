@@ -92,6 +92,8 @@ void loop() {
 
      if (sensor_fire_status == LOW || t >= 35 || t <= 20){
        postData(pinAPI,"{\"pin\":15,\"state\":1,\"key\":\"" + String(KIT002) + "\"}");     // Open BELL_PIN
+     } else {
+        postData(pinAPI,"{\"pin\":15,\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     // Close BELL_PIN
      }
 
      postData(dhtAPI,"{\"temperature\":" + String(t) + ",\"humidity\":" + String(h) + ",\"key\":\"" + String(KIT002) + "\"}");
