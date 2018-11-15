@@ -18,7 +18,7 @@ const char* host = PIN_API;
 
 Servo myServo;
 
-int SERVO_PIN = 2;
+int SERVO_PIN = 2; // 5V
 int LIGHT_OF_BATH_ROOM = 4;
 int LIGHT_OF_LIVING_ROOM = 5;
 int LIGHT_OF_KITCHEN = 12;
