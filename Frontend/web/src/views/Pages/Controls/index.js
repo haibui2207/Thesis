@@ -17,11 +17,11 @@ class Controls extends Component {
       pinsUsed: [
         { pin: 1, key: kitKey002, label: "Enable Automation" },
         { pin: 2, key: kitKey002, label: "Door" },
-        { pin: 4, key: kitKey002, label: "Light bath room" },
-        { pin: 5, key: kitKey002, label: "Light living room" },
-        { pin: 12, key: kitKey002, label: "Light kitchen" },
-        { pin: 13, key: kitKey002, label: "Light gate" },
-        { pin: 14, key: kitKey002, label: "Light bedroom" },
+        { pin: 5, key: kitKey002, label: "Light bedroom stage 1" },
+        { pin: 4, key: kitKey002, label: "Light living rom stage 1" },
+        { pin: 12, key: kitKey002, label: "Light bedroom stage 2" },
+        // { pin: 13, key: kitKey002, label: "Light gate" },
+        { pin: 14, key: kitKey002, label: "Light living room stage 2" },
         { pin: 15, key: kitKey002, label: "Bell" }
       ],
       pins: [
