@@ -21,8 +21,8 @@ class Controls extends Component {
         { pin: 4, key: kitKey002, label: "Light living rom stage 1" },
         { pin: 12, key: kitKey002, label: "Light living room stage 2" },
         { pin: 14, key: kitKey002, label: "Light bedroom stage 2" },
-        // { pin: 13, key: kitKey002, label: "Light gate" },
-        { pin: 15, key: kitKey002, label: "Bell" }
+        { pin: 13, key: kitKey002, label: "Bell" },
+        // { pin: 15, key: kitKey002, label: "Bell" }
       ],
       pins: [
         { pin: 2, key: kitKey002, state: 0 },

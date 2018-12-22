@@ -23,7 +23,7 @@ class Monitoring extends Component {
         { temperature: 37, humidity: 49 },
       ],
       pinsUsed: [
-        // { pin: 13, key: kitKey002, header: "Light", mainText: "Gate", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
+        { pin: 13, key: kitKey002, header: "Bell", mainText: "Bell", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
         { pin: 4, key: kitKey002, header: "Light", mainText: "Living room stage 1", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
         { pin: 5, key: kitKey002, header: "Light", mainText: "Bedroom stage 1", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
         { pin: 12, key: kitKey002, header: "Light", mainText: "Living room stage 2", color: "success", iconOff: 'far fa-lightbulb', iconOn: 'fas fa-lightbulb', isClicked: true },
