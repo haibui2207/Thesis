@@ -23,7 +23,7 @@ int LIGHT_OF_LIVING_ROOM_1 = 4; // Led living room stage 1
 int LIGHT_OF_BEDROOM_1 = 5; // Led bed room stage 1
 int LIGHT_OF_BEDROOM_2 = 14; // Led bed room stage 2
 int LIGHT_OF_LIVING_ROOM_2 = 12; // Led living room stage 2
-int BELL_PIN = 15;
+int BELL_PIN = 13;
 
 bool isDoorOpened = false;
 
