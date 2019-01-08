@@ -72,12 +72,14 @@ void loop() {
         postData(pinAPI,"{\"pin\":2,\"state\":1,\"key\":\"" + String(KIT002) + "\"}");     // Open door
         isDoorOpen = true;
       }
+      delay(2000);
     }
     else{
       display.clear();
       display.drawString(35, 25, "INVALID USER");
       display.display();
       Serial.println("Invalid USER");
+      delay(2000);
     }  
     digitalWrite(led,LOW);
   }

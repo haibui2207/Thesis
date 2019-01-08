@@ -17,13 +17,11 @@ const char* pinAPI = PIN_API;
 const char* dhtAPI = DHT_API;
 
 // GPIO of kit receive
-// SERVO_PIN = 2;
-// LIGHT_OF_BATH_ROOM = 4;
-// LIGHT_OF_LIVING_ROOM = 5;
-// LIGHT_OF_KITCHEN = 12;
-// LIGHT_OF_GATE = 13;
-// LIGHT_OF_BED_ROOM = 14;
-// BELL_PIN = 15;
+int LIGHT_OF_LIVING_ROOM_1 = 4; // Led living room stage 1
+int LIGHT_OF_BEDROOM_1 = 5; // Led bed room stage 1
+int LIGHT_OF_LIVING_ROOM_2 = 12; // Led living room stage 2
+int LIGHT_OF_BEDROOM_2 = 14; // Led bed room stage 2
+int BELL_PIN = 13;
 
 // GPIO of kit send signal
 int SENSOR_FIRE = 4;
@@ -53,52 +51,60 @@ void loop() {
      int sensor_fire_status = digitalRead(SENSOR_FIRE);
      float h = dht.readHumidity();    //Đọc độ ẩm
      float t = dht.readTemperature(); //Đọc nhiệt độ
+       Serial.print("nhiet do: ");
+     Serial.println(t);
+     Serial.print("do am: ");
+     Serial.println(h);
      static char humi[10];
      static char temp[10];
      dtostrf(h,6,2,humi);
      dtostrf(t,6,2,temp);
-    
+   
+   
      String data = getHttpRespone(pinAPI);
-//     Serial.println(data);
+////     Serial.println(data);
      JsonObject& enable_automation_response = getPinInJsonArray(data , 1, KIT002);
-     JsonObject& response_4 = getPinInJsonArray(data , 4, KIT002); 
-     JsonObject& response_5 = getPinInJsonArray(data , 5, KIT002);   
-     JsonObject& response_12 = getPinInJsonArray(data , 12, KIT002); 
-     JsonObject& response_13 = getPinInJsonArray(data , 13, KIT002); 
-     JsonObject& response_14 = getPinInJsonArray(data , 14, KIT002); 
-     
+     JsonObject& response_4 = getPinInJsonArray(data , LIGHT_OF_LIVING_ROOM_1, KIT002); 
+     JsonObject& response_5 = getPinInJsonArray(data , LIGHT_OF_BEDROOM_1, KIT002);   
+     JsonObject& response_12 = getPinInJsonArray(data , LIGHT_OF_LIVING_ROOM_2, KIT002); 
+     JsonObject& response_14 = getPinInJsonArray(data , LIGHT_OF_BEDROOM_2, KIT002); 
+//     
      int enable_automation_state = enable_automation_response["state"]; 
-     int light_of_bath_room  = response_4["state"];  
-     int light_of_living_room = response_5["state"];  
-     int light_of_kitchen_room = response_12["state"];  
-     int light_of_gate_room = response_13["state"];  
-     int light_of_bed_room = response_14["state"]; 
+     int light_of_living_room_1  = response_4["state"];  
+     int light_of_bedroom_1 = response_5["state"];  
+     int light_of_living_room_2 = response_12["state"];  
+     int light_of_bedroom_2 = response_14["state"];  
      
      if(enable_automation_state == 1) {
        if (sensor_light_status == HIGH){
-         if(light_of_living_room == 0) postData(pinAPI,"{\"pin\":5,\"state\":1,\"key\":\"" + String(KIT002) + "\"}");    
-         if(light_of_kitchen_room == 0) postData(pinAPI,"{\"pin\":12,\"state\":1,\"key\":\"" + String(KIT002) + "\"}");   
-         if(light_of_gate_room == 0) postData(pinAPI,"{\"pin\":13,\"state\":1,\"key\":\"" + String(KIT002) + "\"}");     
-         if(light_of_bath_room == 1) postData(pinAPI,"{\"pin\":4,\"state\":0,\"key\":\"" + String(KIT002) + "\"}");   
-         if(light_of_bed_room == 1) postData(pinAPI,"{\"pin\":14,\"state\":0,\"key\":\"" + String(KIT002) + "\"}");    
+         if(light_of_living_room_1 == 0) postData(pinAPI,"{\"pin\":" + String(LIGHT_OF_LIVING_ROOM_1) + ",\"state\":1,\"key\":\"" + String(KIT002) + "\"}");    
+         if(light_of_bedroom_1 == 0) postData(pinAPI,"{\"pin\":" + String(LIGHT_OF_BEDROOM_1) + ",\"state\":1,\"key\":\"" + String(KIT002) + "\"}");   
+         if(light_of_living_room_2 == 0) postData(pinAPI,"{\"pin\":" + String(LIGHT_OF_LIVING_ROOM_2) + ",\"state\":1,\"key\":\"" + String(KIT002) + "\"}");     
+         if(light_of_bedroom_2 == 0) postData(pinAPI,"{\"pin\":" + String(LIGHT_OF_BEDROOM_2) + ",\"state\":1,\"key\":\"" + String(KIT002) + "\"}");   
        } else {
-         if(light_of_living_room == 1) postData(pinAPI,"{\"pin\":5,\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     
-         if(light_of_kitchen_room == 1) postData(pinAPI,"{\"pin\":12,\"state\":0,\"key\":\"" + String(KIT002) + "\"}");   
-         if(light_of_gate_room == 1) postData(pinAPI,"{\"pin\":13,\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     
-         if(light_of_bath_room == 1) postData(pinAPI,"{\"pin\":4,\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     
-         if(light_of_bed_room == 1) postData(pinAPI,"{\"pin\":14,\"state\":0,\"key\":\"" + String(KIT002) + "\"}"); 
+         if(light_of_living_room_1 == 1) postData(pinAPI,"{\"pin\":" + String(LIGHT_OF_LIVING_ROOM_1) + ",\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     
+         if(light_of_bedroom_1 == 1) postData(pinAPI,"{\"pin\":" + String(LIGHT_OF_BEDROOM_1) + ",\"state\":0,\"key\":\"" + String(KIT002) + "\"}");   
+         if(light_of_living_room_2 == 1) postData(pinAPI,"{\"pin\":" + String(LIGHT_OF_LIVING_ROOM_2) + ",\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     
+         if(light_of_bedroom_2 == 1) postData(pinAPI,"{\"pin\":" + String(LIGHT_OF_BEDROOM_2) + ",\"state\":0,\"key\":\"" + String(KIT002) + "\"}");    
        }
      }
 
-     if (sensor_fire_status == LOW || t >= 35 || t <= 20){
-       postData(pinAPI,"{\"pin\":15,\"state\":1,\"key\":\"" + String(KIT002) + "\"}");     // Open BELL_PIN
+     if (sensor_fire_status == LOW){
+       postData(pinAPI,"{\"pin\":" + String(BELL_PIN) + ",\"state\":1,\"key\":\"" + String(KIT002) + "\"}");     // Open BELL_PIN
+     } else if (isnan(t) == false){
+        if(t >= 35 || t <= 20){
+          postData(pinAPI,"{\"pin\":" + String(BELL_PIN) + ",\"state\":1,\"key\":\"" + String(KIT002) + "\"}");     // Open BELL_PIN
+        } else {
+          postData(pinAPI,"{\"pin\":" + String(BELL_PIN) + ",\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     // Close BELL_PIN
+        }
      } else {
-        postData(pinAPI,"{\"pin\":15,\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     // Close BELL_PIN
+        postData(pinAPI,"{\"pin\":" + String(BELL_PIN) + ",\"state\":0,\"key\":\"" + String(KIT002) + "\"}");     // Close BELL_PIN
      }
+
 
      postData(dhtAPI,"{\"temperature\":" + String(t) + ",\"humidity\":" + String(h) + ",\"key\":\"" + String(KIT002) + "\"}");
     
-     delay(2000); 
+//     delay(2000); 
   }
   else{
     Serial.println("Connect to server Failed. Reconnecting...");    

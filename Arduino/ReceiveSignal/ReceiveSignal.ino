@@ -76,7 +76,7 @@ void loop() {
 
     if(state_bell == 0){ digitalWrite(BELL_PIN,HIGH);} else { digitalWrite(BELL_PIN,LOW);}
 
-    delay(1500); 
+//    delay(1500); 
   }
   else{
     Serial.println("Connect to server Failed. Reconnecting...");    
