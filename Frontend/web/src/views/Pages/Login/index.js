@@ -31,12 +31,18 @@ class Login extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.reset();
-  }
+  // componentWillMount() {
+  //   // this.props.reset();
+  //   console.log('will mount login');
+    
+  // }
 
   componentWillReceiveProps(newProps) {
+    console.log(newProps);
+    
     if (newProps.loginResponse.status === SUCCESSFUL && newProps.loginResponse.isLoggedIn) {
+      localStorage.setItem('isLoggedIn',true);
+      localStorage.setItem('userId',newProps.loginResponse.data.id)
       this.setState({
         showError: false,
         message: ""

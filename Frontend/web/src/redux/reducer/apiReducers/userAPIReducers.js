@@ -18,6 +18,7 @@ export function login(state = initialState, action) {
     case userAPITypes.LOGIN_FAILED:
       return { ...state, status: FAILED, isLoggedIn: false };
     case userAPITypes.RESET:
+      localStorage.clear();
       return { data: null, status: "", isLoggedIn: false };
     default:
       return state;
