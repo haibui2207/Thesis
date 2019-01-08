@@ -33,11 +33,33 @@ namespace Thesis.API.Models.UserModel
         {
             try
             {
-                if (String.IsNullOrEmpty(newUser.role))
+                if (!String.IsNullOrEmpty(newUser.role))
+                {
+                    if (newUser.role == UserRole.Admin || newUser.role == UserRole.User)
+                    {
+                        newUser.role = newUser.role;
+                    }
+                    else
+                    {
+                        newUser.role = UserRole.User;
+                    }
+                }
+                else
                 {
                     newUser.role = UserRole.User;
                 }
-                if (String.IsNullOrEmpty(newUser.gender))
+                if (!String.IsNullOrEmpty(newUser.gender))
+                {
+                    if(newUser.gender == Gender.Female || newUser.gender == Gender.Male)
+                    {
+                        newUser.gender = newUser.gender;
+                    }
+                    else
+                    {
+                        newUser.gender = Gender.Male;
+                    }
+                }
+                else
                 {
                     newUser.gender = Gender.Male;
                 }
@@ -102,21 +124,19 @@ namespace Thesis.API.Models.UserModel
                     {
                         updatedUser.name = user.name;
                     }
-                    if (!String.IsNullOrEmpty(user.password))
-                    {
-                        updatedUser.password = user.password;
-                    }
-                    if (!String.IsNullOrEmpty(user.RFID))
-                    {
-                        updatedUser.RFID = user.RFID;
-                    }
+                    updatedUser.password = user.password;
+                    updatedUser.RFID = user.RFID;
+                    updatedUser.email = user.email;
                     if (!String.IsNullOrEmpty(user.gender))
                     {
-                        updatedUser.gender = user.gender;
-                    }
-                    if (!String.IsNullOrEmpty(user.email))
-                    {
-                        updatedUser.email = user.email;
+                        if (user.gender == Gender.Female || user.gender == Gender.Male)
+                        {
+                            updatedUser.gender = user.gender;
+                        }
+                        else
+                        {
+                            updatedUser.gender = Gender.Male;
+                        }
                     }
                     if (!String.IsNullOrEmpty(user.role))
                     {
@@ -128,7 +148,7 @@ namespace Thesis.API.Models.UserModel
                         {
                             updatedUser.role = UserRole.User;
                         }
-                    }
+                    } 
                     _context.Users.Update(updatedUser);
                     await _context.SaveChangesAsync();
 
